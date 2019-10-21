@@ -1,0 +1,12 @@
+yarn add 
+yarn add 
+yarn add 
+yarn add 
+yarn add styled-components
+yarn add react-native-gesture-handler
+yarn add react-navigation
+yarn add axios
+yarn add @react-navigation/core react-navigation-stack
+yarn add @react-navigation/core react-navigation-tabs
+yarn add @react-navigation/core react-navigation-drawer
+yarn add @react-native-community/async-storage

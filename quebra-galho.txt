@@ -1,0 +1,31 @@
+# quebra-galho
+
+1. Papéis da equipe:
+   1. Diogo Borges - Gerente
+   2. Rafael Albino  - Coordenador Back-End
+   3. Klaiton Ricken - Coordenador Front-End
+   4. Gustavo Carvalho - DBA
+
+
+
+Projeto "Quebra Galho" oferecerá serviços para pessoas que querem fazer algum trabalho Freelance e para pessoas que precisem contratar algum trabalho bom e rápido.
+
+Inicialmente será desenvolvido apenas a página WEB, com acesso MOBILE, provavelmente mais para frente será projetado um APP para Android.
+
+O projeto tem o foco em cadastrar serviços de uma maneira fácil e simples.
+
+O sistema de buscas será realizado inicialmente por Nomes de Freelances e categorias de trabalhos.
+
+
+
+1. Para o projeto do Layout será utilizado o software online Figma;
+2. A organização de afazeres será organizado pelo Trello;
+3. O gerenciamento de arquivos e documentações será feita pelo Google Drive;
+4. Por fim o gerenciamento de versões do projeto será feita pelo Github.
+
+
+
+3. Links do projeto:
+   1. https://github.com/Haaragard/quebra-galho
+   2. https://drive.google.com/open?id=1ubKYzwxk304QS2lQRwxkaITU34poVJlf
+   3. http://zavoloklom.github.io/material-design-iconic-font/icons.html#map -> ícones
