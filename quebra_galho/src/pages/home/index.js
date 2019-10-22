@@ -4,6 +4,9 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
 
+// import {API_URL} from 'react-native-dotenv';
+const API_URL = 'http://localhos:3001';
+
 import api from '../../api';
 
 import {styles} from '../../styles/DefaultStyles';
@@ -166,7 +169,8 @@ const Home = ({user, toggleUser}) => (
 //     }
 // }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, props) => ({
+  ...props,
   user: state.user,
 });
 
