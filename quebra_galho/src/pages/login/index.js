@@ -8,9 +8,17 @@ import {
   Button,
   ToastAndroid,
 } from 'react-native';
+
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
+
 import {styles, formStyles} from '../../styles/DefaultStyles';
 import Icon from 'react-native-vector-icons/Entypo';
+
+import * as UserActions from '../../store/actions/user';
+
+import api from '../../api';
 
 const showPassIcon = (
   <Icon name="eye" size={30} color="#000" style={formStyles.btnRightInput} />
@@ -24,7 +32,7 @@ const hidePassIcon = (
   />
 );
 
-export default class Login extends Component {
+class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -59,9 +67,37 @@ export default class Login extends Component {
     this._signInAsync;
   };
 
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
-    this.props.navigation.navigate('App');
+  handleSignInPress = async () => {
+    if (this.state.email.length === 0 || this.state.password.length === 0) {
+      ToastAndroid.show(
+        'Preencha usuário e senha para continuar!',
+        ToastAndroid.SHORT,
+      );
+    } else {
+      try {
+        const response = await api.post('/auth/login', {
+          email: this.state.email,
+          senha: this.state.password,
+        });
+
+        ToastAndroid.show('Login realizado com sucesso!', ToastAndroid.SHORT);
+
+        await AsyncStorage.setItem(
+          '@QuebraGalhoOficial:token',
+          response.data.token,
+        );
+
+        this.props.toggleUser(response.data);
+
+        this.props.navigation.navigate('App');
+      } catch (err) {
+        console.warn(err);
+        ToastAndroid.show(
+          'Houve um problema com o login, verifique suas credenciais!',
+          ToastAndroid.SHORT,
+        );
+      }
+    }
   };
 
   render() {
@@ -120,7 +156,7 @@ export default class Login extends Component {
           </View>
           <View style={formStyles.btGroup}>
             <View style={formStyles.btSubmit}>
-              <Button title="Entrar" onPress={() => this.pressBtnLogin} />
+              <Button title="Entrar" onPress={() => this.handleSignInPress()} />
             </View>
           </View>
         </ScrollView>
@@ -128,3 +164,16 @@ export default class Login extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, props) => ({
+  ...props,
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(UserActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Login);

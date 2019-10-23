@@ -4,9 +4,6 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
 
-// import {API_URL} from 'react-native-dotenv';
-const API_URL = 'http://localhos:3001';
-
 import api from '../../api';
 
 import {styles} from '../../styles/DefaultStyles';
@@ -67,28 +64,45 @@ const users = [
   {},
 ];
 
-const Home = ({user, toggleUser}) => (
-  <ScrollView style={styles.content}>
-    <View tyle={styles.appHeader}></View>
-    <View>
-      <Text>{JSON.stringify(user)}</Text>
-      <View style={{margin: 20}}>
-        <Button title="user1" onPress={() => toggleUser(users[0])} />
-      </View>
-      <View style={{margin: 20}}>
-        <Button title="user2" onPress={() => toggleUser(users[1])} />
-      </View>
-      <View style={{margin: 20}}>
-        <Button title="user3" onPress={() => toggleUser(users[2])} />
-      </View>
-      <View style={{margin: 20}}>
-        <Button title="user4" onPress={() => toggleUser(users[3])} />
-      </View>
-      <View style={{margin: 20}}>
-        <Button title="SAIR" onPress={() => toggleUser(users[4])} />
-      </View>
-    </View>
-    {/* <Button
+class Home extends Component {
+  render() {
+    return (
+      <ScrollView style={styles.content}>
+        <View tyle={styles.appHeader}></View>
+        <View>
+          <Text>{JSON.stringify(this.props.user)}</Text>
+          <View style={{margin: 20}}>
+            <Button
+              title="user1"
+              onPress={() => this.props.toggleUser(users[0])}
+            />
+          </View>
+          <View style={{margin: 20}}>
+            <Button
+              title="user2"
+              onPress={() => this.props.toggleUser(users[1])}
+            />
+          </View>
+          <View style={{margin: 20}}>
+            <Button
+              title="user3"
+              onPress={() => this.props.toggleUser(users[2])}
+            />
+          </View>
+          <View style={{margin: 20}}>
+            <Button
+              title="user4"
+              onPress={() => this.props.toggleUser(users[3])}
+            />
+          </View>
+          <View style={{margin: 20}}>
+            <Button
+              title="SAIR"
+              onPress={() => this.props.toggleUser(users[4])}
+            />
+          </View>
+        </View>
+        {/* <Button
       title="Login"
       onPress={() => this.props.navigation.navigate('Login')}
     />
@@ -96,18 +110,24 @@ const Home = ({user, toggleUser}) => (
       title="Cadastro"
       onPress={() => this.props.navigation.navigate('Cadastro')}
     /> */}
-    {/* <View style={{ marginTop: 50, marginBottom: 50, }}>
+        {/* <View style={{ marginTop: 50, marginBottom: 50, }}>
             <Button
                 title = 'ATT API'
                 // onPress = {this.clickAttApi}
             />
         </View> */}
-    {/* <Button
+        {/* <Button
             title = 'Login'
             // onPress = {() => this.props.navigation.navigate('Auth')}
         /> */}
-  </ScrollView>
-);
+      </ScrollView>
+    );
+  }
+}
+
+// const Home = ({user, toggleUser}) => (
+
+// );
 
 // class Home extends Component {
 //     constructor(props) {

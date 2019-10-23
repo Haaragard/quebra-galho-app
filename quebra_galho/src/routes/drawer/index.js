@@ -5,6 +5,30 @@ import {drawerStyles} from '../../styles/DefaultStyles';
 import Icon from 'react-native-vector-icons/Entypo';
 
 class DrawerContent extends Component {
+  constructor(props) {
+    super(props);
+    const state = {
+      user: {},
+    };
+  }
+
+  requestUserData = async () => {
+    if (this.props.user.auth) {
+      console.log('mae do klaito');
+      let response = await api.post('/auth/token', {
+        token: this.props.users.token,
+      });
+
+      if (response.data.auth) {
+        this.setState({user: response.data.user});
+      }
+    }
+  };
+
+  componentDidMount = () => {
+    this.requestUserData();
+  };
+
   render() {
     return (
       <View style={drawerStyles.container}>
@@ -15,15 +39,19 @@ class DrawerContent extends Component {
             </View>
             <View style={drawerStyles.containerUserData}>
               <View style={drawerStyles.containerGroupUserData}>
-                <Text style={drawerStyles.textUserDataLabel}>Nome:</Text>
+                <Text style={drawerStyles.textUserDataLabel}>
+                  {this.state.user.nome ? 'Nome:' : ''}
+                </Text>
                 <Text style={drawerStyles.textUserData}>
-                  {this.props.user.user.nome}
+                  {this.state.user.nome ? this.state.user.nome : ''}
                 </Text>
               </View>
               <View style={drawerStyles.containerGroupUserData}>
-                <Text style={drawerStyles.textUserDataLabel}>CPF:</Text>
+                <Text style={drawerStyles.textUserDataLabel}>
+                  {this.state.user.cpf ? 'CPF:' : ''}
+                </Text>
                 <Text style={drawerStyles.textUserData}>
-                  {this.props.user.user.cpf}
+                  {this.state.user.cpf ? this.state.user.cpf : ''}
                 </Text>
               </View>
             </View>
@@ -57,7 +85,7 @@ class DrawerContent extends Component {
             <View style={drawerStyles.containerMenuLine}>
               <View style={drawerStyles.containerIcon}>
                 <Icon
-                  name={this.props.user.auth ? 'log-out' : 'login'}
+                  name={this.state.user.auth ? 'log-out' : 'login'}
                   size={30}
                   color="#000"
                 />

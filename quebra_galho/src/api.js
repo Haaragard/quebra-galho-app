@@ -1,13 +1,13 @@
 import axios from 'axios';
 
-//Klaiton on my NTBK as ROUTER
-// const endereco = 'https://192.168.137.185:3001/api';
+//Online
+// const endereco = 'https://quebra-galho-backend.herokuapp.com';
 
 //Home
-const endereco = 'https://192.168.0.172/quebragalho';
+// const endereco = 'http://192.168.0.172:3001';
 
 //MY NTBK
-// const endereco = 'https://zzz/api';
+const endereco = 'http://192.168.137.1:3001';
 
 const api = axios.create({
   baseURL: endereco,
