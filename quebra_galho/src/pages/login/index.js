@@ -87,7 +87,7 @@ class Login extends Component {
           response.data.token,
         );
 
-        this.props.toggleUser(response.data);
+        this.props.toggleStatusUser(response.data);
 
         this.props.navigation.navigate('App');
       } catch (err) {

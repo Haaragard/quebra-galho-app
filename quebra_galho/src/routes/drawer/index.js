@@ -1,33 +1,24 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
+
+import api from '../../api';
+
 import {drawerStyles} from '../../styles/DefaultStyles';
 import Icon from 'react-native-vector-icons/Entypo';
+
+// import
 
 class DrawerContent extends Component {
   constructor(props) {
     super(props);
-    const state = {
+    this.state = {
+      auth: false,
       user: {},
     };
-  }
 
-  requestUserData = async () => {
-    if (this.props.user.auth) {
-      console.log('mae do klaito');
-      let response = await api.post('/auth/token', {
-        token: this.props.users.token,
-      });
-
-      if (response.data.auth) {
-        this.setState({user: response.data.user});
-      }
-    }
-  };
-
-  componentDidMount = () => {
     this.requestUserData();
-  };
+  }
 
   render() {
     return (
@@ -35,23 +26,23 @@ class DrawerContent extends Component {
         <View style={drawerStyles.header}>
           <View style={drawerStyles.containerUser}>
             <View style={drawerStyles.containerUserImg}>
-              <Image />
+              {/* <Image href={this.state.auth ? require('./svg/1f604.svg') : /> */}
             </View>
             <View style={drawerStyles.containerUserData}>
               <View style={drawerStyles.containerGroupUserData}>
                 <Text style={drawerStyles.textUserDataLabel}>
-                  {this.state.user.nome ? 'Nome:' : ''}
+                  {this.state.auth ? 'Nome:' : ''}
                 </Text>
                 <Text style={drawerStyles.textUserData}>
-                  {this.state.user.nome ? this.state.user.nome : ''}
+                  {this.state.auth ? this.state.user.nome : ''}
                 </Text>
               </View>
               <View style={drawerStyles.containerGroupUserData}>
                 <Text style={drawerStyles.textUserDataLabel}>
-                  {this.state.user.cpf ? 'CPF:' : ''}
+                  {this.state.auth ? 'CPF:' : ''}
                 </Text>
                 <Text style={drawerStyles.textUserData}>
-                  {this.state.user.cpf ? this.state.user.cpf : ''}
+                  {this.state.auth ? this.state.user.cpf : ''}
                 </Text>
               </View>
             </View>
@@ -78,20 +69,20 @@ class DrawerContent extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this.props.user.auth
-                ? this.props.navigation.navigate('Logout')
+              this.state.auth
+                ? this.handlerLogout()
                 : this.props.navigation.navigate('Login');
             }}>
             <View style={drawerStyles.containerMenuLine}>
               <View style={drawerStyles.containerIcon}>
                 <Icon
-                  name={this.state.user.auth ? 'log-out' : 'login'}
+                  name={this.state.auth ? 'log-out' : 'login'}
                   size={30}
                   color="#000"
                 />
               </View>
               <Text style={drawerStyles.textMenu}>
-                {this.props.user.auth ? 'Logout' : 'Login'}
+                {this.state.auth ? 'Logout' : 'Login'}
               </Text>
             </View>
           </TouchableOpacity>
@@ -99,6 +90,22 @@ class DrawerContent extends Component {
       </View>
     );
   }
+
+  requestUserData = async () => {
+    if (this.props.user.status.auth) {
+      let response = await api.post('/user/token', {
+        token: this.props.user.status.token,
+      });
+      if (response.data.auth) {
+        this.setState({user: response.data.user});
+        this.setState({auth: response.data.auth});
+      }
+    }
+  };
+
+  handlerLogout = async () => {
+    console.warn('bacon');
+  };
 }
 
 const mapStateToProps = (state, props) => ({

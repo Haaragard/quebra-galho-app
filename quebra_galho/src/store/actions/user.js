@@ -1,6 +1,6 @@
-export function toggleUser(user) {
-    return {
-        type: 'TOGGLE_USER',
-        user,
-    };
+export function toggleStatusUser(user) {
+  return {
+    type: 'TOGGLE_STATUS_USER',
+    user,
+  };
 }
