@@ -13,7 +13,7 @@ export default function user(state = INITIAL_STATE, action) {
     case actions.TOGGLE_STATUS_USER:
       return {
         ...state,
-        user: action.user,
+        status: action.status,
       };
     default:
       return state;

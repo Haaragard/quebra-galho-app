@@ -67,7 +67,7 @@ class Login extends Component {
     this._signInAsync;
   };
 
-  handleSignInPress = async () => {
+  async handleSignInPress() {
     if (this.state.email.length === 0 || this.state.password.length === 0) {
       ToastAndroid.show(
         'Preencha usuário e senha para continuar!',
@@ -89,16 +89,15 @@ class Login extends Component {
 
         this.props.toggleStatusUser(response.data);
 
-        this.props.navigation.navigate('App');
+        this.props.navigation.navigate('LoadingScreen');
       } catch (err) {
-        console.warn(err);
         ToastAndroid.show(
           'Houve um problema com o login, verifique suas credenciais!',
           ToastAndroid.SHORT,
         );
       }
     }
-  };
+  }
 
   render() {
     return (
@@ -157,6 +156,12 @@ class Login extends Component {
           <View style={formStyles.btGroup}>
             <View style={formStyles.btSubmit}>
               <Button title="Entrar" onPress={() => this.handleSignInPress()} />
+            </View>
+            <View style={formStyles.btSubmit}>
+              <Button
+                title="Home"
+                onPress={() => this.props.navigation.navigate('App')}
+              />
             </View>
           </View>
         </ScrollView>

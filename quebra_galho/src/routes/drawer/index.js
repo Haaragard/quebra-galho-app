@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import AsyncStorage from '@react-native-community/async-storage';
+import * as UserActions from '../../store/actions/user';
 
 import api from '../../api';
 
 import {drawerStyles} from '../../styles/DefaultStyles';
 import Icon from 'react-native-vector-icons/Entypo';
-
-// import
 
 class DrawerContent extends Component {
   constructor(props) {
@@ -104,7 +105,15 @@ class DrawerContent extends Component {
   };
 
   handlerLogout = async () => {
-    console.warn('bacon');
+    try {
+      await AsyncStorage.removeItem('@QuebraGalhoOficial:token', err => {
+        if (err) throw Exception('Erro no AsyncStorage');
+        // this.props.toggleStatusUser({auth: false, token: null});
+        this.props.navigation.navigate('LoadingScreen');
+      });
+    } catch (error) {
+      ('Não foi possível realizar o Logout.');
+    }
   };
 }
 
@@ -113,4 +122,10 @@ const mapStateToProps = (state, props) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(DrawerContent);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(UserActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(DrawerContent);

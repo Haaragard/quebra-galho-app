@@ -31,6 +31,13 @@ const AppNavigator = createDrawerNavigator(
   },
 );
 
+const LoadingScreenStack = createStackNavigator(
+  {
+    LoadingScreen: {screen: LoadingScreen},
+  },
+  {initialRouteName: 'LoadingScreen'},
+);
+
 const AuthStack = createStackNavigator(
   {
     Login: {screen: Login},
@@ -47,9 +54,10 @@ const AppContainer = createAppContainer(
       LoadingScreen: LoadingScreen,
       App: AppNavigator,
       Auth: AuthStack,
+      LoadingScreen: LoadingScreenStack,
     },
     {
-      initialRouteName: 'App',
+      initialRouteName: 'LoadingScreen',
     },
   ),
 );
