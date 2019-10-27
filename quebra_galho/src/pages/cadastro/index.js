@@ -81,10 +81,7 @@ export default class Cadastro extends Component {
     if (password === passwordConfirm) {
       return true;
     } else {
-      ToastAndroid.show(
-        'Senhas não coincidem! ' + password + ' ' + passwordConfirm,
-        ToastAndroid.SHORT,
-      );
+      ToastAndroid.show('Senhas não coincidem!', ToastAndroid.SHORT);
       return false;
     }
   };
@@ -127,7 +124,7 @@ export default class Cadastro extends Component {
     };
 
     api
-      .post('/users', dataStore)
+      .post('/user/store', dataStore)
       .then(() => {
         ToastAndroid.show(
           'Cadastro realizado com sucesso!',

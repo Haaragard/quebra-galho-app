@@ -94,7 +94,7 @@ class DrawerContent extends Component {
 
   requestUserData = async () => {
     if (this.props.user.status.auth) {
-      let response = await api.post('/user/token', {
+      let response = await api.post('/user/auth/token', {
         token: this.props.user.status.token,
       });
       if (response.data.auth) {

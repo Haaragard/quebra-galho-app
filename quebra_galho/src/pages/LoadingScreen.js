@@ -24,7 +24,7 @@ class LoadingScreen extends Component {
     };
 
     if (userToken) {
-      let response = await api.post('/auth/token', {
+      let response = await api.post('/user/auth/token', {
         token: userToken,
       });
 

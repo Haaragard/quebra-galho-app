@@ -75,7 +75,7 @@ class Login extends Component {
       );
     } else {
       try {
-        const response = await api.post('/auth/login', {
+        const response = await api.post('/user/auth/login', {
           email: this.state.email,
           senha: this.state.password,
         });
