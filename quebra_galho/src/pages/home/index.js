@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import {View, ScrollView, Text, Button} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -15,23 +16,11 @@ class Home extends Component {
         <View tyle={styles.appHeader}></View>
         <View>
           <Text>{JSON.stringify(this.props.user)}</Text>
-          {/* <View style={{margin: 20}}>
-            <Button
-              title="user1"
-              onPress={() => this.props.toggleStatusUser(users[0])}
-            />
-          </View>
-          <View style={{margin: 20}}>
-            <Button
-              title="SAIR"
-              onPress={() => this.props.toggleStatusUser(users[1])}
-            />
-          </View> */}
         </View>
         <View style={{marginTop: 50}}>
           <Button
-            title="Login"
-            onPress={() => this.props.navigation.navigate('Login')}
+            title="MinhaConta"
+            onPress={() => this.props.navigation.navigate('MinhaConta')}
           />
         </View>
         <View style={{marginTop: 50}}>

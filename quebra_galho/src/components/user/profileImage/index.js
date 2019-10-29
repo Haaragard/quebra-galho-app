@@ -9,7 +9,17 @@ class ProfileImage extends Component {
   }
 
   render() {
-    return <View></View>;
+    return (
+      <View
+        style={{
+          backgroundColor: '#A358',
+          width: 130,
+          height: 130,
+          borderColor: '#000',
+          borderWidth: 1,
+          borderRadius: 65,
+        }}></View>
+    );
   }
 }
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
@@ -7,11 +8,13 @@ import {stylesMenu} from '../styles/DefaultStyles';
 
 import DrawerContent from './drawer';
 
-import Login from '../pages/login';
 import LoadingScreen from '../pages/LoadingScreen';
 
-import Home from '../pages/home';
+import Login from '../pages/login';
 import Cadastro from '../pages/cadastro';
+
+import Home from '../pages/home';
+import MinhaConta from '../pages/user';
 
 export default class Routes extends Component {
   render() {
@@ -22,9 +25,10 @@ export default class Routes extends Component {
 const AppNavigator = createDrawerNavigator(
   {
     Home: {screen: Home},
+    MinhaConta: {screen: MinhaConta},
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'MinhaConta',
     contentComponent: DrawerContent,
     drawerPosition: 'left',
     drawerType: 'front',

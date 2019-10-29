@@ -143,6 +143,9 @@ export const drawerStyles = StyleSheet.create({
     alignContent: 'center',
     alignItems: 'center',
   },
+  textContainerMenuLine: {
+    marginLeft: 20,
+  },
   textUserDataLabel: {
     width: 45,
     marginRight: 5,
@@ -156,4 +159,51 @@ export const drawerStyles = StyleSheet.create({
   textMenu: {
     marginLeft: 20,
   },
+  separator: {
+    width: '100%',
+    marginTop: 20,
+    marginBottom: 20,
+    borderBottomWidth: 1,
+    borderColor: '#a1a1a1',
+  },
+});
+
+export const MinhaContaStyles = StyleSheet.create({
+  content: {
+    flex: 1,
+  },
+  headerPerfil: {
+    width: '100%',
+    height: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+  },
+  bodyPerfil: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  nameEditableView: {flexDirection: 'row'},
+  nameEditableText: {
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  editableView: {flexDirection: 'row', width: '70%'},
+  editableTextLabel: {
+    marginTop: 20,
+    marginBottom: 20,
+    marginRight: 10,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  editableText: {
+    marginTop: 20,
+    marginBottom: 20,
+    fontSize: 14,
+  },
+  editIcon: {marginTop: 20, marginLeft: 15},
 });

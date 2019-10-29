@@ -35,7 +35,7 @@ class DrawerContent extends Component {
                   {this.state.auth ? 'Nome:' : ''}
                 </Text>
                 <Text style={drawerStyles.textUserData}>
-                  {this.state.auth ? this.state.user.nome : ''}
+                  {/* {this.state.auth ? this.state.user.nome : ''} */}
                 </Text>
               </View>
               <View style={drawerStyles.containerGroupUserData}>
@@ -52,22 +52,51 @@ class DrawerContent extends Component {
         <View style={drawerStyles.content}>
           <TouchableOpacity>
             <View style={drawerStyles.containerMenuLine}>
-              <Text>Menu 1</Text>
+              <Text style={drawerStyles.textContainerMenuLine}>
+                Divulgar Serviços
+              </Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity>
             <View style={drawerStyles.containerMenuLine}>
-              <Text>Menu 2</Text>
+              <Text style={drawerStyles.textContainerMenuLine}>
+                Histórico de Serviços
+              </Text>
             </View>
           </TouchableOpacity>
 
           <TouchableOpacity>
             <View style={drawerStyles.containerMenuLine}>
-              <Text>Menu 3</Text>
+              <Text style={drawerStyles.textContainerMenuLine}>Agenda</Text>
             </View>
           </TouchableOpacity>
-
+          <TouchableOpacity>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>
+                Confirmação de pagamento
+              </Text>
+            </View>
+          </TouchableOpacity>
+          <View style={drawerStyles.separator}></View>
+          {/* <TouchableOpacity
+            onPress={() => {
+              this.state.auth
+                ? this.props.navigation.navigate('MinhaConta')
+                : false;
+            }}>
+            <View style={drawerStyles.containerMenuLine}>
+              <View style={drawerStyles.containerIcon}>
+                <Icon
+                name={this.state.auth ? 'log-out' : 'login'}
+                size={30}
+                color="#000"
+                /> *
+              </View>
+              <Text style={drawerStyles.textMenu}>Minha conta</Text>
+            </View>
+          </TouchableOpacity> */}
+          {this.state.auth ? this.buttonMenuMinhaConta() : undefined}
           <TouchableOpacity
             onPress={() => {
               this.state.auth
@@ -94,7 +123,7 @@ class DrawerContent extends Component {
 
   requestUserData = async () => {
     if (this.props.user.status.auth) {
-      let response = await api.post('/user/auth/token', {
+      let response = await api.post('/user/token', {
         token: this.props.user.status.token,
       });
       if (response.data.auth) {
@@ -115,6 +144,22 @@ class DrawerContent extends Component {
       ('Não foi possível realizar o Logout.');
     }
   };
+
+  buttonMenuMinhaConta = () => (
+    <TouchableOpacity
+      onPress={() => this.props.navigation.navigate('MinhaConta')}>
+      <View style={drawerStyles.containerMenuLine}>
+        <View style={drawerStyles.containerIcon}>
+          {/* <Icon
+            name={this.state.auth ? 'log-out' : 'login'}
+            size={30}
+            color="#000"
+          /> */}
+        </View>
+        <Text style={drawerStyles.textMenu}>Minha conta</Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const mapStateToProps = (state, props) => ({
