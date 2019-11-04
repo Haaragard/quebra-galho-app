@@ -50,7 +50,19 @@ class DrawerContent extends Component {
           </View>
         </View>
         <View style={drawerStyles.content}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('Home');
+            }}>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>Home</Text>
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('DivulgarServico');
+            }}>
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>
                 Divulgar Serviços
@@ -71,6 +83,7 @@ class DrawerContent extends Component {
               <Text style={drawerStyles.textContainerMenuLine}>Agenda</Text>
             </View>
           </TouchableOpacity>
+
           <TouchableOpacity>
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>
@@ -78,25 +91,11 @@ class DrawerContent extends Component {
               </Text>
             </View>
           </TouchableOpacity>
+
           <View style={drawerStyles.separator}></View>
-          {/* <TouchableOpacity
-            onPress={() => {
-              this.state.auth
-                ? this.props.navigation.navigate('MinhaConta')
-                : false;
-            }}>
-            <View style={drawerStyles.containerMenuLine}>
-              <View style={drawerStyles.containerIcon}>
-                <Icon
-                name={this.state.auth ? 'log-out' : 'login'}
-                size={30}
-                color="#000"
-                /> *
-              </View>
-              <Text style={drawerStyles.textMenu}>Minha conta</Text>
-            </View>
-          </TouchableOpacity> */}
+
           {this.state.auth ? this.buttonMenuMinhaConta() : undefined}
+
           <TouchableOpacity
             onPress={() => {
               this.state.auth

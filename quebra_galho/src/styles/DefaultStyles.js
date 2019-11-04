@@ -15,8 +15,9 @@ export const styles = StyleSheet.create({
   },
   appHeader: {
     margin: 0,
-    backgroundColor: '#000',
+    backgroundColor: '#fff',
     height: 50,
+    width: '100%',
     marginBottom: 10,
   },
   content: {
@@ -47,6 +48,25 @@ export const styles = StyleSheet.create({
   },
   linksPage: {
     color: '#80CCFF',
+  },
+  contentServicosMaisAcessado: {
+    width: '100%',
+    height: 200,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+  },
+  scrollServicosMaisAcessado: {
+    flex: 1,
+    flexDirection: 'row',
+    borderTopWidth: 2,
+    borderTopColor: '#80CCFF',
+    backgroundColor: '#46660',
+  },
+  contentServicosProximos: {flex: 1, backgroundColor: '#fff'},
+  scrollServicosMaisAcessado: {
+    flex: 1,
+    borderTopWidth: 2,
+    borderTopColor: '#80CCFF',
   },
 });
 
@@ -206,4 +226,10 @@ export const MinhaContaStyles = StyleSheet.create({
     fontSize: 14,
   },
   editIcon: {marginTop: 20, marginLeft: 15},
+});
+
+export const DivulgarServicosStyle = StyleSheet.create({
+  content: {
+    flex: 1,
+  },
 });

@@ -14,6 +14,7 @@ import Login from '../pages/login';
 import Cadastro from '../pages/cadastro';
 
 import Home from '../pages/home';
+import DivulgarServico from '../pages/divulgarServico';
 import MinhaConta from '../pages/user';
 
 export default class Routes extends Component {
@@ -28,7 +29,7 @@ const AppNavigator = createDrawerNavigator(
     MinhaConta: {screen: MinhaConta},
   },
   {
-    initialRouteName: 'MinhaConta',
+    initialRouteName: 'Home',
     contentComponent: DrawerContent,
     drawerPosition: 'left',
     drawerType: 'front',
@@ -58,6 +59,7 @@ const AppContainer = createAppContainer(
       App: AppNavigator,
       Auth: AuthStack,
       LoadingScreen: LoadingScreenStack,
+      DivulgarServico: DivulgarServico,
     },
     {
       initialRouteName: 'LoadingScreen',
