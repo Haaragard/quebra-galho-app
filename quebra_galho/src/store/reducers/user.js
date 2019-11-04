@@ -4,7 +4,7 @@ const actions = {
 const INITIAL_STATE = {
   status: {
     auth: false,
-    token: {},
+    token: null,
   },
 };
 

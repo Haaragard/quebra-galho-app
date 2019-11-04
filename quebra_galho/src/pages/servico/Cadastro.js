@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
   ToastAndroid,
+  Button,
 } from 'react-native';
 import {connect} from 'react-redux';
 
@@ -16,6 +17,23 @@ import {
   formStyles,
   DivulgarServicosStyle,
 } from '../../styles/DefaultStyles';
+
+const fields = [
+  {
+    type: 'text',
+    name: 'nome',
+    required: true,
+    icon: 'text',
+    label: 'Nome',
+  },
+  {
+    type: 'text',
+    name: 'descricao',
+    required: true,
+    icon: 'text',
+    label: 'Descrição',
+  },
+];
 
 class DivulgarServico extends Component {
   constructor(props) {

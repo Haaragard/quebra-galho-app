@@ -14,7 +14,7 @@ import Login from '../pages/login';
 import Cadastro from '../pages/cadastro';
 
 import Home from '../pages/home';
-import DivulgarServico from '../pages/divulgarServico';
+import DivulgarServico from '../pages/servico/Cadastro';
 import MinhaConta from '../pages/user';
 
 export default class Routes extends Component {

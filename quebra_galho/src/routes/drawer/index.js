@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, Image, TouchableOpacity} from 'react-native';
+import {View, Text, Image, TouchableOpacity, ToastAndroid} from 'react-native';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -140,7 +140,10 @@ class DrawerContent extends Component {
         this.props.navigation.navigate('LoadingScreen');
       });
     } catch (error) {
-      ('Não foi possível realizar o Logout.');
+      ToastAndroid.show(
+        'Não foi possível realizar o Logout.',
+        ToastAndroid.SHORT,
+      );
     }
   };
 

@@ -16,26 +16,36 @@ class LoadingScreen extends Component {
   }
 
   _bootstrapAsync = async () => {
-    let userToken = await AsyncStorage.getItem('@QuebraGalhoOficial:token');
+    try {
+      let userToken = await AsyncStorage.getItem('@QuebraGalhoOficial:token');
 
-    let status = {
-      auth: false,
-      token: null,
-    };
-
-    if (userToken) {
-      let response = await api.post('/user/auth/token', {
-        token: userToken,
-      });
-
-      status = {
-        auth: response.data.auth,
-        token: response.data.auth ? userToken : null,
+      let status = {
+        auth: false,
+        token: null,
       };
-    }
-    this.props.toggleStatusUser(status);
 
-    this.props.navigation.navigate('App');
+      if (userToken) {
+        let response = await api.post('/user/token', {
+          token: userToken,
+        });
+
+        console.warn(response);
+
+        status = {
+          auth: response.data.auth,
+          token: response.data.auth ? userToken : null,
+        };
+      }
+      this.props.toggleStatusUser(status);
+      this.props.navigation.navigate('App');
+    } catch (error) {
+      let status = {
+        auth: false,
+        token: null,
+      };
+      this.props.toggleStatusUser(status);
+      this.props.navigation.navigate('App');
+    }
   };
 
   render() {
