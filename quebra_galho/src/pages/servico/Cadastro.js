@@ -18,23 +18,6 @@ import {
   DivulgarServicosStyle,
 } from '../../styles/DefaultStyles';
 
-const fields = [
-  {
-    type: 'text',
-    name: 'nome',
-    required: true,
-    icon: 'text',
-    label: 'Nome',
-  },
-  {
-    type: 'text',
-    name: 'descricao',
-    required: true,
-    icon: 'text',
-    label: 'Descrição',
-  },
-];
-
 class DivulgarServico extends Component {
   constructor(props) {
     super(props);
@@ -65,11 +48,45 @@ class DivulgarServico extends Component {
                 maxLength={40}
                 autoCapitalize="words"
                 autoCompleteType="name"
-                // onChangeText={this.handleNomeChange}
-                // value={this.state.nome}
+                onChangeText={this.handleNomeChange}
+                value={this.state.service.nome}
               />
             </View>
           </View>
+
+          <View style={formStyles.inputGroupField}>
+            <Text style={formStyles.labelInput}>Descrição</Text>
+            <View style={formStyles.borderInputTextBox}>
+              <TextInput
+                style={formStyles.inputTextBox}
+                placeholderTextColor={colors.placeHolderTextColor}
+                placeholder="Descrição de serviço"
+                maxLength={250}
+                multiline
+                numberOfLines={10}
+                autoCapitalize="sentences"
+                autoCompleteType="off"
+                onChangeText={this.handleDescricaoChange}
+                value={this.state.service.descricao}
+              />
+            </View>
+          </View>
+
+          {/* <View style={formStyles.inputGroupField}>
+            <Text style={formStyles.labelInput}>Nome</Text>
+            <View style={formStyles.borderInputText}>
+              <TextInput
+                style={formStyles.inputText}
+                placeholderTextColor={colors.placeHolderTextColor}
+                placeholder="Nome"
+                maxLength={40}
+                autoCapitalize="words"
+                autoCompleteType="name"
+                onChangeText={this.handleDescricaoChange}
+                value={this.state.service.descricao}
+              />
+            </View>
+          </View> */}
         </View>
         <View style={{marginTop: 50}}>
           <Button
@@ -81,6 +98,24 @@ class DivulgarServico extends Component {
     );
   }
 
+  handleNomeChange = nome => {
+    this.setState({
+      service: {
+        ...this.state.service,
+        nome,
+      },
+    });
+  };
+
+  handleDescricaoChange = descricao => {
+    this.setState({
+      service: {
+        ...this.state.service,
+        descricao,
+      },
+    });
+  };
+
   getUserData = async () => {
     if (!this.props.user.status.auth) {
       ToastAndroid.show(
@@ -90,11 +125,16 @@ class DivulgarServico extends Component {
       this.props.navigation.navigate('Home');
     } else {
       try {
-        const response = await api.post('/user/token', {
-          token: this.props.user.status.token,
-        });
-
-        this.setState({user: response.data.user});
+        await api
+          .post('/user/token', {
+            token: this.props.user.status.token,
+          })
+          .then(response => {
+            this.setState({user: response.data.user});
+          })
+          .catch(err => {
+            ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+          });
       } catch (err) {
         ToastAndroid.show(
           'Houve um problema com a verificação das suas credenciais!',

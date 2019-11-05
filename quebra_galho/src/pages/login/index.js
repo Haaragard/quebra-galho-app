@@ -75,27 +75,34 @@ class Login extends Component {
       );
     } else {
       try {
-        const response = await api.post('/user/auth/login', {
-          email: this.state.email,
-          senha: this.state.password,
-        });
+        await api
+          .post('/user/auth/login', {
+            email: this.state.email,
+            senha: this.state.password,
+          })
+          .then(async response => {
+            ToastAndroid.show(
+              'Login realizado com sucesso!',
+              ToastAndroid.SHORT,
+            );
 
-        ToastAndroid.show('Login realizado com sucesso!', ToastAndroid.SHORT);
+            await AsyncStorage.setItem(
+              '@QuebraGalhoOficial:token',
+              response.data.token,
+            );
 
-        await AsyncStorage.setItem(
-          '@QuebraGalhoOficial:token',
-          response.data.token,
-        );
-
-        this.props.toggleStatusUser(response.data);
-
-        this.props.navigation.navigate('LoadingScreen');
+            this.props.toggleStatusUser(response.data);
+          })
+          .catch(err => {
+            ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+          });
       } catch (err) {
         ToastAndroid.show(
-          'Houve um problema com o login, verifique suas credenciais!',
+          'Ocorreu algum problema ao realizar o Login!',
           ToastAndroid.SHORT,
         );
       }
+      this.props.navigation.navigate('LoadingScreen');
     }
   }
 

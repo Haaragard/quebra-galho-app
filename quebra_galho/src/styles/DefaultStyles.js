@@ -100,6 +100,18 @@ export const formStyles = StyleSheet.create({
     fontSize: 14,
     height: '100%',
   },
+  borderInputTextBox: {
+    height: 120,
+    borderWidth: 1,
+    borderColor: '#5F5F5F',
+    borderRadius: 5,
+    flexDirection: 'row',
+  },
+  inputTextBox: {
+    flex: 1,
+    fontSize: 14,
+    height: '100%',
+  },
   btnRightInput: {
     marginTop: 2,
   },
@@ -205,31 +217,34 @@ export const MinhaContaStyles = StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
   },
-  nameEditableView: {flexDirection: 'row'},
-  nameEditableText: {
+  nameEditableView: {
+    flexDirection: 'row',
     marginTop: 20,
     marginBottom: 20,
+    width: '50%',
+  },
+  nameEditableText: {
+    flex: 1,
     fontSize: 16,
     fontWeight: 'bold',
   },
-  editableView: {flexDirection: 'row', width: '70%'},
+  groupShowData: {flexDirection: 'row', width: '70%', marginTop: 20},
+  editableView: {flex: 1, flexDirection: 'row'},
   editableTextLabel: {
-    marginTop: 20,
-    marginBottom: 20,
     marginRight: 10,
     fontSize: 14,
     fontWeight: 'bold',
   },
   editableText: {
-    marginTop: 20,
-    marginBottom: 20,
+    flex: 1,
     fontSize: 14,
   },
-  editIcon: {marginTop: 20, marginLeft: 15},
+  editIcon: {marginLeft: 10, width: 20, height: '100%'},
 });
 
 export const DivulgarServicosStyle = StyleSheet.create({
   content: {
     flex: 1,
+    alignItems: 'center',
   },
 });

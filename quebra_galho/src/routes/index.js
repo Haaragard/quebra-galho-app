@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
+import {LocaleConfig} from 'react-native-calendars';
 
 import {stylesMenu} from '../styles/DefaultStyles';
 
@@ -16,6 +17,50 @@ import Cadastro from '../pages/cadastro';
 import Home from '../pages/home';
 import DivulgarServico from '../pages/servico/Cadastro';
 import MinhaConta from '../pages/user';
+
+LocaleConfig.locales['pt-br'] = {
+  monthNames: [
+    'Janeiro',
+    'Fevereiro',
+    'Março',
+    'Abril',
+    'Maio',
+    'Junho',
+    'Julho',
+    'Agosto',
+    'Setembro',
+    'Outubro',
+    'Novembro',
+    'Dezembro',
+  ],
+  monthNamesShort: [
+    'Jan.',
+    'Fev.',
+    'Mar.',
+    'Abr.',
+    'Mai.',
+    'Jun.',
+    'Jul.',
+    'Ago.',
+    'Set.',
+    'Out.',
+    'Nov.',
+    'Dez.',
+  ],
+  dayNames: [
+    'Domingo',
+    'Segunda',
+    'Terça',
+    'Quarta',
+    'Quinta',
+    'Sexta',
+    'Sábado',
+  ],
+  dayNamesShort: ['Dom.', 'Seg.', 'Ter.', 'Qua.', 'Qui.', 'Sex.', 'Sáb.'],
+  today: ['Hoje'],
+};
+
+LocaleConfig.defaultLocale = 'pt-br';
 
 export default class Routes extends Component {
   render() {

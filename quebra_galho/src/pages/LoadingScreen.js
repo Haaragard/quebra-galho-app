@@ -1,5 +1,11 @@
 import React, {Component} from 'react';
-import {ActivityIndicator, StatusBar, View, Image} from 'react-native';
+import {
+  ActivityIndicator,
+  StatusBar,
+  View,
+  Image,
+  ToastAndroid,
+} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
@@ -16,36 +22,35 @@ class LoadingScreen extends Component {
   }
 
   _bootstrapAsync = async () => {
+    let status = {
+      auth: false,
+      token: null,
+    };
+
     try {
       let userToken = await AsyncStorage.getItem('@QuebraGalhoOficial:token');
 
-      let status = {
-        auth: false,
-        token: null,
-      };
-
       if (userToken) {
-        let response = await api.post('/user/token', {
-          token: userToken,
-        });
-
-        console.warn(response);
-
-        status = {
-          auth: response.data.auth,
-          token: response.data.auth ? userToken : null,
-        };
+        await api
+          .post('/user/token', {
+            token: userToken,
+          })
+          .then(function(response) {
+            status = {
+              auth: response.data.auth,
+              token: response.data.auth ? userToken : null,
+            };
+          })
+          .catch(function(err) {});
       }
-      this.props.toggleStatusUser(status);
-      this.props.navigation.navigate('App');
     } catch (error) {
-      let status = {
-        auth: false,
-        token: null,
-      };
-      this.props.toggleStatusUser(status);
-      this.props.navigation.navigate('App');
+      ToastAndroid.show(
+        'Ocorreu um erro ao tentar realizar a autenticação!',
+        ToastAndroid.SHORT,
+      );
     }
+    this.props.toggleStatusUser(status);
+    this.props.navigation.navigate('Home');
   };
 
   render() {

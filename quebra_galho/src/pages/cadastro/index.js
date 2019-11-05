@@ -8,6 +8,8 @@ import {
   Button,
   ToastAndroid,
 } from 'react-native';
+import {TextInputMask} from 'react-native-masked-text';
+import DatePicker from 'react-native-datepicker';
 import {styles, formStyles, colors} from '../../styles/DefaultStyles';
 
 import api from '../../api';
@@ -38,6 +40,8 @@ export default class Cadastro extends Component {
       passwordConfirm: '',
       showPass: true,
       showPassConfirm: true,
+      dataNasc: new Date().toLocaleDateString(),
+      todayDate: new Date().toLocaleDateString(),
     };
   }
 
@@ -86,6 +90,23 @@ export default class Cadastro extends Component {
     }
   };
 
+  validationDataNascimento = dataNascimento => {
+    let dateNascUser = dataNascimento.split('/');
+    let dateNow = new Date().toLocaleDateString().split('/');
+    let numDateNascUser = new Date(
+      dateNascUser[2],
+      dateNascUser[1] - 1,
+      dateNascUser[0],
+    ).getTime();
+    let numDateNow = new Date(
+      dateNow[2] - 18,
+      dateNow[1] - 1,
+      dateNow[0],
+    ).getTime();
+
+    return numDateNascUser <= numDateNow ? true : false;
+  };
+
   pressBtnCadastrar = () => {
     let regex = /(?!(\d)\1{2}.\1{3}.\1{3}-\1{2})\d{3}\.\d{3}\.\d{3}\-\d{2}/gm;
     if (!this.state.nome) {
@@ -107,6 +128,16 @@ export default class Cadastro extends Component {
       }
     } else if (!regex.test(this.state.cpf)) {
       ToastAndroid.show('O CPF digitado é inválido.', ToastAndroid.SHORT);
+    } else if (!this.validationDataNascimento(this.state.dataNasc)) {
+      ToastAndroid.show(
+        'Idade do usuário precisa ser maior de 18!',
+        ToastAndroid.SHORT,
+      );
+    } else if (!this.state.password) {
+      ToastAndroid.show(
+        'É necessário preencher o campo de "Senha"',
+        ToastAndroid.SHORT,
+      );
     } else if (
       this.validationPass(this.state.password, this.state.passwordConfirm)
     ) {
@@ -114,30 +145,37 @@ export default class Cadastro extends Component {
     }
   };
 
-  _store = () => {
+  _store = async () => {
     let dataStore = {
       nome: this.state.nome,
       sobrenome: this.state.sobrenome,
       email: this.state.email,
       cpf: this.state.cpf,
       senha: this.state.password,
+      dataNascimento: this.state.dataNasc
+        .split('/')
+        .reverse()
+        .join('-'),
     };
-
-    api
-      .post('/user/store', dataStore)
-      .then(() => {
-        ToastAndroid.show(
-          'Cadastro realizado com sucesso!',
-          ToastAndroid.SHORT,
-        );
-        this.props.navigation.navigate('Login');
-      })
-      .catch(() => {
-        ToastAndroid.show(
-          'Ocorreu um erro ao tentar realizar o cadastro!',
-          ToastAndroid.SHORT,
-        );
-      });
+    try {
+      await api
+        .post('/user/store', dataStore)
+        .then(response => {
+          ToastAndroid.show(
+            'Cadastro realizado com sucesso!',
+            ToastAndroid.SHORT,
+          );
+          this.props.navigation.navigate('Login');
+        })
+        .catch(err => {
+          ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+        });
+    } catch (error) {
+      ToastAndroid.show(
+        'Ocorreu um erro ao tentar cadastrar.',
+        ToastAndroid.SHORT,
+      );
+    }
   };
 
   render() {
@@ -199,17 +237,31 @@ export default class Cadastro extends Component {
             <View style={formStyles.inputGroupField}>
               <Text style={formStyles.labelInput}>CPF</Text>
               <View style={formStyles.borderInputText}>
-                <TextInput
+                <TextInputMask
                   style={formStyles.inputText}
-                  placeholderTextColor={colors.placeHolderTextColor}
                   placeholder="999.999.999-99"
-                  maxLength={30}
-                  autoCapitalize="none"
-                  autoCompleteType="off"
-                  onChangeText={this.handleCpfChange}
+                  type={'cpf'}
                   value={this.state.cpf}
+                  onChangeText={this.handleCpfChange}
                 />
               </View>
+            </View>
+            <View style={formStyles.inputGroupField}>
+              <Text style={formStyles.labelInput}>Data de nascimento</Text>
+              <DatePicker
+                style={{width: '100%'}}
+                date={this.state.dataNasc}
+                mode="date"
+                placeholder="Data de nascimento"
+                format="DD/MM/YYYY"
+                minDate="01/01/1900"
+                maxDate={this.state.todayDate}
+                confirmBtnText="Confirmar"
+                cancelBtnText="Cancelar"
+                onDateChange={date => {
+                  this.setState({dataNasc: date});
+                }}
+              />
             </View>
             <View style={formStyles.inputGroupField}>
               <Text style={formStyles.labelInput}>Senha</Text>

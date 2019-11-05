@@ -18,9 +18,10 @@ class MinhaConta extends Component {
     super(props);
     this.state = {
       cpf: '',
-      nome: 'Diogo',
-      sobrenome: 'Antunes',
-      email: 'diogololz159@gmail.com',
+      nome: '',
+      sobrenome: '',
+      email: '',
+      dataNascimento: '',
       senha: '******',
       avatar: '',
     };
@@ -45,19 +46,22 @@ class MinhaConta extends Component {
         </View>
 
         <View style={MinhaContaStyles.bodyPerfil}>
-          <View style={MinhaContaStyles.editableView}>
+          <View style={MinhaContaStyles.groupShowData}>
             <Text style={MinhaContaStyles.editableTextLabel}>E-mail:</Text>
-            <Text style={MinhaContaStyles.editableText}>
-              {this.state.email}
-            </Text>
-            <TouchableOpacity
-              onPress={() => this.editName()}
-              style={MinhaContaStyles.editIcon}>
-              <Icon name="edit" size={20} color="#000" />
-            </TouchableOpacity>
+            <View style={MinhaContaStyles.editableView}>
+              <Text style={MinhaContaStyles.editableText}>
+                {this.state.email}
+              </Text>
+              <TouchableOpacity
+                onPress={() => this.editName()}
+                style={MinhaContaStyles.editIcon}>
+                <Icon name="edit" size={20} color="#000" />
+              </TouchableOpacity>
+            </View>
           </View>
-          <View style={MinhaContaStyles.editableView}>
+          <View style={MinhaContaStyles.groupShowData}>
             <Text style={MinhaContaStyles.editableTextLabel}>Senha:</Text>
+            <View></View>
             <Text style={MinhaContaStyles.editableText}>
               {this.state.senha}
             </Text>
@@ -67,7 +71,7 @@ class MinhaConta extends Component {
               <Icon name="edit" size={20} color="#000" />
             </TouchableOpacity>
           </View>
-          <View style={MinhaContaStyles.editableView}>
+          <View style={MinhaContaStyles.groupShowData}>
             <Text style={MinhaContaStyles.editableTextLabel}>
               Certificados:
             </Text>
@@ -85,7 +89,24 @@ class MinhaConta extends Component {
     );
   }
 
-  getUserData = async () => {};
+  getUserData = async () => {
+    if (!this.props.user.status.auth) {
+      ToastAndroid.show(
+        'É preciso estar logado para acessar essa área!',
+        ToastAndroid.SHORT,
+      );
+      this.props.navigation.navigate('Home');
+    }
+
+    await api
+      .post('/user/token', {token: this.props.user.status.token})
+      .then(response => {
+        this.setState({...this.state, ...response.data.user});
+      })
+      .catch(err => {
+        ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+      });
+  };
 
   editName = async () => {
     console.warn('Name editing...');

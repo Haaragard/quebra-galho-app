@@ -35,7 +35,7 @@ class DrawerContent extends Component {
                   {this.state.auth ? 'Nome:' : ''}
                 </Text>
                 <Text style={drawerStyles.textUserData}>
-                  {/* {this.state.auth ? this.state.user.nome : ''} */}
+                  {this.state.auth ? this.state.user.nome : ''}
                 </Text>
               </View>
               <View style={drawerStyles.containerGroupUserData}>
