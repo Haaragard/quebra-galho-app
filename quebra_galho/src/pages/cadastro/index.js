@@ -12,6 +12,8 @@ import {TextInputMask} from 'react-native-masked-text';
 import DatePicker from 'react-native-datepicker';
 import {styles, formStyles, colors} from '../../styles/DefaultStyles';
 
+import moment from 'moment';
+
 import api from '../../api';
 
 import Icon from 'react-native-vector-icons/Entypo';
@@ -40,8 +42,8 @@ export default class Cadastro extends Component {
       passwordConfirm: '',
       showPass: true,
       showPassConfirm: true,
-      dataNasc: new Date().toLocaleDateString(),
-      todayDate: new Date().toLocaleDateString(),
+      dataNasc: moment(new Date()).format('DD/MM/YYYY'),
+      todayDate: moment(new Date()).format('DD/MM/YYYY'),
     };
   }
 
@@ -91,20 +93,10 @@ export default class Cadastro extends Component {
   };
 
   validationDataNascimento = dataNascimento => {
-    let dateNascUser = dataNascimento.split('/');
-    let dateNow = new Date().toLocaleDateString().split('/');
-    let numDateNascUser = new Date(
-      dateNascUser[2],
-      dateNascUser[1] - 1,
-      dateNascUser[0],
-    ).getTime();
-    let numDateNow = new Date(
-      dateNow[2] - 18,
-      dateNow[1] - 1,
-      dateNow[0],
-    ).getTime();
+    let dateNascUser = moment(dataNascimento, 'DD/MM/YYYY').add(18, 'years');
+    let dateNow = moment(this.state.todayDate, 'DD/MM/YYYY');
 
-    return numDateNascUser <= numDateNow ? true : false;
+    return moment(dateNow).isAfter(dateNascUser) ? true : false;
   };
 
   pressBtnCadastrar = () => {

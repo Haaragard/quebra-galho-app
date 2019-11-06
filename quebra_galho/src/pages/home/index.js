@@ -12,37 +12,57 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
 
-import api from '../../api';
+import api, {BASEURL} from '../../api';
 
 import {styles, stylesMenu} from '../../styles/DefaultStyles';
 
 const DATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'First Item',
+    _id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    descricao: 'First Item',
+    fotoPrincipal: 'testefoto1',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Second Item',
+    _id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    descricao: 'Second Item',
+    fotoPrincipal: 'testefoto2',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Third Item',
+    _id: '58694a0f-3da1-47df-bdgs6-1gsgs1e29d72',
+    descricao: 'Third Item',
+    fotoPrincipal: 'testefoto3',
+  },
+  {
+    _id: '58694a0f-3gd1-474w-bd96-145571e29d72',
+    descricao: 'Fourth Item',
+    fotoPrincipal: 'testefoto4',
+  },
+  {
+    _id: '58dwdwa0f-3da1-471f-bd96-145571e29d72',
+    descricao: 'Fifth Item',
+    fotoPrincipal: 'testefoto5',
   },
 ];
 
 class Home extends Component {
-  // static navigationOptions = {
-  //   headerBackTitle: 'bacon',
-  //   title: 'Home',
-  //   headerStyle: {
-  //     backgroundColor: stylesMenu.backgroundColor,
-  //   },
-  //   headerTintColor: '#fff',
-  //   headerTitleStyle: {
-  //     fontWeight: 'bold',
-  //   },
-  // };
+  constructor(props) {
+    super(props);
+    this.state = {
+      listServicosMaisAcessados: [],
+      listServicosMaisProximos: [],
+    };
+  }
+
+  componentDidMount() {
+    this._setLists();
+  }
+
+  _setLists = async () => {
+    this.setState({
+      listServicosMaisAcessados: DATA,
+      listServicosMaisProximos: DATA,
+    });
+  };
 
   render() {
     return (
@@ -61,7 +81,8 @@ class Home extends Component {
                   <Text>Nenhum encontrado...</Text>
                 </View>
               )}
-              data={DATA}
+              data={this.state.listServicosMaisAcessados}
+              keyExtractor={(item, index) => item._id}
               renderItem={({item, index}) => (
                 <TouchableOpacity
                   style={styles.touchableServicoSmall}
@@ -69,9 +90,16 @@ class Home extends Component {
                     console.warn('essa foi');
                   }}>
                   <View style={styles.dadosServicoSmall}>
-                    <Image style={styles.imageServicoSmall} />
+                    <Image
+                      source={{uri: BASEURL + item.fotoPrincipal}}
+                      style={styles.imageServicoSmall}
+                    />
                     <View style={styles.descricaoServicoSmall}>
-                      <Text numberOfLines={4}>{item.title}</Text>
+                      <Text
+                        numberOfLines={4}
+                        style={styles.descricaoServicoSmall}>
+                        {item.descricao}
+                      </Text>
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -83,36 +111,37 @@ class Home extends Component {
           <Text>Serviços próximos de você</Text>
           <View style={styles.containerFlatListProximo}>
             <FlatList
-              style={{flex: 1, flexDirection: 'column'}}
-              data={DATA}
+              style={styles.padraoFLatList}
+              ItemSeparatorComponent={() => (
+                <View style={styles.separatorDown} />
+              )}
+              ListEmptyComponent={() => (
+                <View style={styles.contentFlatListEmpty}>
+                  <Text>Nenhum encontrado...</Text>
+                </View>
+              )}
+              data={this.state.listServicosMaisProximos}
+              keyExtractor={(item, index) => item._id}
               renderItem={({item, index}) => (
                 <TouchableOpacity
-                  style={{
-                    width: '100%',
-                    height: 200,
-                    backgroundColor: '#A3A3A3',
-                    flexDirection: 'row',
+                  style={styles.touchableServicoBig}
+                  onPress={() => {
+                    console.warn('essa foi');
                   }}>
-                  <View>
-                    <Text>Bacon</Text>
+                  <View style={styles.dadosServicoBig}>
+                    <Image
+                      source={{uri: BASEURL + item.fotoPrincipal}}
+                      style={styles.imageServicoBig}
+                    />
+                    <View style={styles.descricaoServicoBig}>
+                      <Text
+                        numberOfLines={4}
+                        style={styles.descricaoServicoBig}>
+                        {item.descricao}
+                      </Text>
+                    </View>
                   </View>
                 </TouchableOpacity>
-                // <TouchableOpacity
-                //   style={{
-                //     height: '100%',
-                //     width: 300,
-                //     backgroundColor: '#A3A3A3',
-                //     flexDirection: 'row',
-                //   }}>
-                //   <View style={{flex: 1, flexDirection: 'row', margin: 10}}>
-                //     <View style={{flex: 1}}>
-                //       <Image />
-                //     </View>
-                //     <View style={{flex: 1}}>
-                //       <Text>Descriçao</Text>
-                //     </View>
-                //   </View>
-                // </TouchableOpacity>
               )}
             />
           </View>

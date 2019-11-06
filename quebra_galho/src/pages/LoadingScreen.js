@@ -5,6 +5,7 @@ import {
   View,
   Image,
   ToastAndroid,
+  PermissionsAndroid,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import {bindActionCreators} from 'redux';
@@ -19,6 +20,8 @@ class LoadingScreen extends Component {
 
   componentDidMount() {
     this._bootstrapAsync();
+
+    requestPermissions();
   }
 
   _bootstrapAsync = async () => {
@@ -66,6 +69,68 @@ class LoadingScreen extends Component {
         <StatusBar barStyle="default" />
       </View>
     );
+  }
+}
+
+async function requestPermissions() {
+  await requestCameraPermission();
+  await requestFineLocationPermission();
+  return;
+}
+
+async function requestCameraPermission() {
+  if (
+    !(await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.CAMERA))
+  ) {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.CAMERA,
+      );
+
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        ToastAndroid.show('Agora você pode usar a câmera.', ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show('Você não pode usar a câmera.', ToastAndroid.SHORT);
+      }
+    } catch (error) {
+      console.warn(error);
+      ToastAndroid.show(
+        'Ocorreu algum erro ao garantir acesso à câmera.',
+        ToastAndroid.SHORT,
+      );
+    }
+  }
+}
+
+async function requestFineLocationPermission() {
+  if (
+    !(await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    ))
+  ) {
+    try {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      );
+
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        ToastAndroid.show(
+          'Agora você pode usar a sua localização atual.',
+          ToastAndroid.SHORT,
+        );
+      } else {
+        ToastAndroid.show(
+          'Você não pode usar a sua localização atual.',
+          ToastAndroid.SHORT,
+        );
+      }
+    } catch (error) {
+      console.warn(error);
+      ToastAndroid.show(
+        'Ocorreu algum erro ao garantir acesso à localização atual.',
+        ToastAndroid.SHORT,
+      );
+    }
   }
 }
 

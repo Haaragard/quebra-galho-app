@@ -94,6 +94,25 @@ export const styles = StyleSheet.create({
   descricaoServicoSmall: {
     flex: 1,
   },
+  touchableServicoBig: {
+    height: 110,
+    width: '100%',
+    backgroundColor: '#F2F2F2',
+  },
+  dadosServicoBig: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 10,
+  },
+  imageServicoBig: {
+    height: '100%',
+    width: 100,
+    marginRight: 10,
+    backgroundColor: '#fff',
+  },
+  descricaoServicoBig: {
+    flex: 1,
+  },
   contentFlatListEmpty: {
     flex: 1,
     alignItems: 'center',
