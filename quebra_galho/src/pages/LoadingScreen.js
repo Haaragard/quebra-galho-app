@@ -41,7 +41,9 @@ class LoadingScreen extends Component {
               token: response.data.auth ? userToken : null,
             };
           })
-          .catch(function(err) {});
+          .catch(function(err) {
+            ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+          });
       }
     } catch (error) {
       ToastAndroid.show(

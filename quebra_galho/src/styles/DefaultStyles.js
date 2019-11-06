@@ -55,18 +55,52 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
     marginBottom: 10,
   },
-  scrollServicosMaisAcessado: {
+  containerFlatListMaisAcessado: {
     flex: 1,
-    flexDirection: 'row',
     borderTopWidth: 2,
     borderTopColor: '#80CCFF',
-    backgroundColor: '#46660',
   },
   contentServicosProximos: {flex: 1, backgroundColor: '#fff'},
-  scrollServicosMaisAcessado: {
+  containerFlatListProximo: {
     flex: 1,
     borderTopWidth: 2,
     borderTopColor: '#80CCFF',
+  },
+  separatorLeft: {
+    borderLeftColor: '#000',
+    borderLeftWidth: 1,
+  },
+  separatorDown: {
+    borderBottomColor: '#000',
+    borderBottomWidth: 1,
+  },
+  touchableServicoSmall: {
+    height: '100%',
+    width: 145,
+    backgroundColor: '#F2F2F2',
+  },
+  dadosServicoSmall: {
+    flex: 1,
+    flexDirection: 'column',
+    margin: 10,
+  },
+  imageServicoSmall: {
+    height: 85,
+    width: '100%',
+    marginRight: 10,
+    flexDirection: 'column',
+    backgroundColor: '#fff',
+  },
+  descricaoServicoSmall: {
+    flex: 1,
+  },
+  contentFlatListEmpty: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  padraoFLatList: {
+    backgroundColor: '#F2F2F2',
   },
 });
 
