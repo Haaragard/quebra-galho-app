@@ -17,6 +17,7 @@ class MinhaConta extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      userLoad: {},
       cpf: '',
       nome: '',
       sobrenome: '',
@@ -25,14 +26,17 @@ class MinhaConta extends Component {
       senha: '******',
       avatar: '',
     };
+  }
 
+  componentDidMount() {
     this.getUserData();
   }
+
   render() {
     return (
       <View style={MinhaContaStyles.content}>
         <View style={MinhaContaStyles.headerPerfil}>
-          <ProfileImage />
+          <ProfileImage user={this.state.userLoad} avatar={this.state.avatar} />
           <View style={MinhaContaStyles.nameEditableView}>
             <Text style={MinhaContaStyles.nameEditableText}>
               {this.state.nome + ' ' + this.state.sobrenome}
@@ -101,7 +105,11 @@ class MinhaConta extends Component {
     await api
       .post('/user/token', {token: this.props.user.status.token})
       .then(response => {
-        this.setState({...this.state, ...response.data.user});
+        this.setState({
+          ...this.state,
+          ...response.data.user,
+          userLoad: response.data.user,
+        });
       })
       .catch(err => {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);

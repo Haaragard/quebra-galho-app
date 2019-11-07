@@ -114,6 +114,30 @@ const MinhaContaStack = createStackNavigator(
   {
     defaultNavigationOptions: ({navigation}) => ({
       initialRouteName: 'MinhaConta',
+      headerLeft: <DrawerIcon navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: stylesMenu.backgroundColor,
+      },
+    }),
+  },
+);
+
+const DivulgarServicoStack = createStackNavigator(
+  {
+    DivulgarServico: {
+      screen: DivulgarServico,
+      navigationOptions: ({navigation}) => ({
+        title: 'Divulgar Serviço',
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      initialRouteName: 'DivulgarServico',
+      headerLeft: <DrawerIcon navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: stylesMenu.backgroundColor,
+      },
     }),
   },
 );
@@ -122,6 +146,7 @@ const AppNavigator = createDrawerNavigator(
   {
     Home: {screen: HomeStack},
     MinhaConta: {screen: MinhaContaStack},
+    DivulgarServico: {screen: DivulgarServicoStack},
   },
   {
     initialRouteName: 'Home',
@@ -154,7 +179,6 @@ const AppContainer = createAppContainer(
       App: AppNavigator,
       Auth: AuthStack,
       LoadingScreen: LoadingScreenStack,
-      DivulgarServico: DivulgarServico,
     },
     {
       initialRouteName: 'LoadingScreen',

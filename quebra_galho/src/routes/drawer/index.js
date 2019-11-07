@@ -5,10 +5,28 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as UserActions from '../../store/actions/user';
 
-import api from '../../api';
+import api, {BASEURLIMG} from '../../api';
 
 import {drawerStyles} from '../../styles/DefaultStyles';
 import Icon from 'react-native-vector-icons/Entypo';
+
+const UserHeader = props => (
+  <View style={drawerStyles.containerUser}>
+    <View style={drawerStyles.containerUserImg}>
+      <Image href={{uri: BASEURLIMG + props.user.user.avatar}} />
+    </View>
+    <View style={drawerStyles.containerUserData}>
+      <View style={drawerStyles.containerGroupUserData}>
+        <Text style={drawerStyles.textUserDataLabel}>Nome:</Text>
+        <Text style={drawerStyles.textUserData}>{props.user.user.nome}</Text>
+      </View>
+      <View style={drawerStyles.containerGroupUserData}>
+        <Text style={drawerStyles.textUserDataLabel}>CPF:</Text>
+        <Text style={drawerStyles.textUserData}>{props.user.user.cpf}</Text>
+      </View>
+    </View>
+  </View>
+);
 
 class DrawerContent extends Component {
   constructor(props) {
@@ -17,7 +35,9 @@ class DrawerContent extends Component {
       auth: false,
       user: {},
     };
+  }
 
+  componentDidMount() {
     this.requestUserData();
   }
 
@@ -25,29 +45,7 @@ class DrawerContent extends Component {
     return (
       <View style={drawerStyles.container}>
         <View style={drawerStyles.header}>
-          <View style={drawerStyles.containerUser}>
-            <View style={drawerStyles.containerUserImg}>
-              {/* <Image href={this.state.auth ? require('./svg/1f604.svg') : /> */}
-            </View>
-            <View style={drawerStyles.containerUserData}>
-              <View style={drawerStyles.containerGroupUserData}>
-                <Text style={drawerStyles.textUserDataLabel}>
-                  {this.state.auth ? 'Nome:' : ''}
-                </Text>
-                <Text style={drawerStyles.textUserData}>
-                  {this.state.auth ? this.state.user.nome : ''}
-                </Text>
-              </View>
-              <View style={drawerStyles.containerGroupUserData}>
-                <Text style={drawerStyles.textUserDataLabel}>
-                  {this.state.auth ? 'CPF:' : ''}
-                </Text>
-                <Text style={drawerStyles.textUserData}>
-                  {this.state.auth ? this.state.user.cpf : ''}
-                </Text>
-              </View>
-            </View>
-          </View>
+          {this.state.auth ? <UserHeader user={this.state} /> : null}
         </View>
         <View style={drawerStyles.content}>
           <TouchableOpacity
