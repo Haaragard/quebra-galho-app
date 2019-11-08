@@ -58,10 +58,26 @@ class Home extends Component {
   }
 
   _setLists = async () => {
+    _setListGeoLocation();
+    _setListAccess();
     this.setState({
       listServicosMaisAcessados: DATA,
       listServicosMaisProximos: DATA,
     });
+  };
+
+  _setListGeoLocation = async () => {
+    const service = {};
+
+    try {
+      api.post('/service/list');
+    } catch (error) {}
+  };
+
+  _setListAccess = async () => {
+    const service = {
+      acessos: 'desc',
+    };
   };
 
   render() {
