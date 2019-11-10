@@ -208,7 +208,6 @@ export const drawerStyles = StyleSheet.create({
   containerUserImg: {
     width: '30%',
     height: '100%',
-    backgroundColor: '#000',
     marginRight: 10,
   },
   containerUserData: {

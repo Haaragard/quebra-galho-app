@@ -5,15 +5,17 @@ import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 import * as UserActions from '../../store/actions/user';
 
-import api, {BASEURLIMG} from '../../api';
+import api from '../../api';
 
 import {drawerStyles} from '../../styles/DefaultStyles';
 import Icon from 'react-native-vector-icons/Entypo';
 
+import ProfileImage from '../../components/user/profileImage';
+
 const UserHeader = props => (
   <View style={drawerStyles.containerUser}>
     <View style={drawerStyles.containerUserImg}>
-      <Image href={{uri: BASEURLIMG + props.user.user.avatar}} />
+      <ProfileImage height={80} width={80} />
     </View>
     <View style={drawerStyles.containerUserData}>
       <View style={drawerStyles.containerGroupUserData}>
@@ -134,7 +136,8 @@ class DrawerContent extends Component {
     try {
       await AsyncStorage.removeItem('@QuebraGalhoOficial:token', err => {
         if (err) throw Exception('Erro no AsyncStorage');
-        // this.props.toggleStatusUser({auth: false, token: null});
+        this.props.toggleStatusUser({auth: false, token: null});
+        this.props.toggleUser({});
         this.props.navigation.navigate('LoadingScreen');
       });
     } catch (error) {

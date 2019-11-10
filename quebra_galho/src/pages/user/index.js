@@ -36,7 +36,7 @@ class MinhaConta extends Component {
     return (
       <View style={MinhaContaStyles.content}>
         <View style={MinhaContaStyles.headerPerfil}>
-          <ProfileImage user={this.state.userLoad} avatar={this.state.avatar} />
+          <ProfileImage user={this.state.userLoad} />
           <View style={MinhaContaStyles.nameEditableView}>
             <Text style={MinhaContaStyles.nameEditableText}>
               {this.state.nome + ' ' + this.state.sobrenome}

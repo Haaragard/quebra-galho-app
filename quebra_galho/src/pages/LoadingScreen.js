@@ -29,6 +29,7 @@ class LoadingScreen extends Component {
       auth: false,
       token: null,
     };
+    let user = {};
 
     try {
       let userToken = await AsyncStorage.getItem('@QuebraGalhoOficial:token');
@@ -43,6 +44,7 @@ class LoadingScreen extends Component {
               auth: response.data.auth,
               token: response.data.auth ? userToken : null,
             };
+            user = response.data.auth ? response.data.user : {};
           })
           .catch(function(err) {
             ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
@@ -55,6 +57,7 @@ class LoadingScreen extends Component {
       );
     }
     this.props.toggleStatusUser(status);
+    this.props.toggleUser(user);
     this.props.navigation.navigate('Home');
   };
 

@@ -1,6 +1,8 @@
 const actions = {
   TOGGLE_STATUS_USER: 'TOGGLE_STATUS_USER',
+  TOGGLE_USER: 'TOGGLE_USER',
 };
+
 const INITIAL_STATE = {
   status: {
     auth: false,
@@ -14,6 +16,11 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         status: action.status,
+      };
+    case actions.TOGGLE_USER:
+      return {
+        ...state,
+        user: action.user,
       };
     default:
       return state;

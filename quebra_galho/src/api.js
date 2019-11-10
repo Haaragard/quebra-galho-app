@@ -5,20 +5,20 @@ import axios from 'axios';
 // export const BASEURL = 'http://quebra-galho-backend.herokuapp.com';
 // export const BASEURLIMG = 'http://quebra-galho-backend.herokuapp.com/images/';
 // export const BASEURLIMGAVATARUSER =
-// 'http://quebra-galho-backend.herokuapp.com/images/avatar/user';
+// 'http://quebra-galho-backend.herokuapp.com/images/user/avatar';
 
 //Home
 export const endereco = 'http://192.168.0.173:3001';
-export const BASEURL = 'http://192.168.0.173:3001';
-export const BASEURLIMG = 'http://192.168.0.173:3001/images/';
-export const BASEURLIMGAVATARUSER =
-  'http://192.168.0.173:3001/images/avatar/user';
+export const BASE_URL = 'http://192.168.0.173:3001';
+export const BASE_URL_IMG = 'http://192.168.0.173:3001/images/';
+export const BASE_URL_IMG_AVATAR_USER =
+  'http://192.168.0.173:3001/images/user/avatar';
 
 //MY NTBK
 // const endereco = 'http://192.168.137.1:3001';
 // export const BASEURL = 'http://192.168.137.1:3001';
 // export const BASEURLIMG = 'http://192.168.137.1:3001/images/';
-// export const BASEURLIMGAVATARUSER = 'http://192.168.137.1:3001/images/avatar/user';
+// export const BASEURLIMGAVATARUSER = 'http://192.168.137.1:3001/images/user/avatar';
 
 const api = axios.create({
   baseURL: endereco,

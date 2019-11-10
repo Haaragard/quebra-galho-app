@@ -54,7 +54,7 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    this._setLists();
+    // this._setLists();
   }
 
   _setLists = async () => {

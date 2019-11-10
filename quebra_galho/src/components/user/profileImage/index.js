@@ -1,37 +1,41 @@
 import React, {Component} from 'react';
 import {Image, TouchableOpacity, ToastAndroid} from 'react-native';
 
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as UserActions from '../../../store/actions/user';
+
 import ImagePicker from 'react-native-image-crop-picker';
 
-import api, {BASEURLIMG, endereco} from '../../../api';
+import api, {BASE_URL_IMG_AVATAR_USER} from '../../../api';
 
 const imageUploadConfig = {
   headers: {
+    Accept: 'application/json',
     'Content-Type': 'multipart/form-data; charset=utf-8;',
   },
 };
-
-export default class ProfileImage extends Component {
+class ProfileImage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: props.user,
-      avatar: props.user.avatar,
+      user: props.user.user,
       newAvatar: '',
     };
-  }
-
-  componentDidUpdate() {
-    this.loadImage();
   }
 
   render() {
     return (
       <TouchableOpacity onPress={() => this.pressImage()}>
         <Image
-          href={{uri: BASEURLIMG + this.state.avatar}}
+          source={
+            this.state.user.avatar
+              ? {
+                  uri: `${BASE_URL_IMG_AVATAR_USER}/${this.state.user.avatar}`,
+                }
+              : require('../../../img/user/defaultUser.jpg')
+          }
           style={{
-            backgroundColor: '#A358',
             width: this.props.width || 130,
             height: this.props.height || 130,
             borderColor: '#000',
@@ -46,6 +50,7 @@ export default class ProfileImage extends Component {
   loadImage = async () => {};
 
   pressImage = () => {
+    if (!this.state.user) return false;
     try {
       ImagePicker.openPicker({
         width: 300,
@@ -54,7 +59,6 @@ export default class ProfileImage extends Component {
       })
         .then(image => {
           this.setState({newAvatar: image});
-          // console.warn(image);
           this._uploadImage();
         })
         .catch(err => {
@@ -77,44 +81,51 @@ export default class ProfileImage extends Component {
       uri: this.state.newAvatar.path,
       path: this.state.newAvatar.path,
       mimetype: this.state.newAvatar.mime,
-      originalname: 'Avatar',
+      type: this.state.newAvatar.mime,
+      originalname: fileName,
+      name: fileName,
       size: this.state.newAvatar.size,
     });
 
-    // formData.append('user', this.state.user);
-    console.warn(this.state);
-    console.warn(this.state.user);
-    console.warn(formData);
+    formData.append('user', JSON.stringify(this.state.user));
 
-    await api
-      .post(
-        '/user/update/avatar',
-        {
-          file: {
-            uri: this.state.newAvatar.path,
-            path: this.state.newAvatar.path,
-            mimetype: this.state.newAvatar.mime,
-            originalname: 'Avatar',
-            size: this.state.newAvatar.size,
+    try {
+      await api
+        .post('/user/avatar/upload', formData, {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': `multipart/form-data; boundary=${formData._boundary}`,
           },
-        },
-        imageUploadConfig,
-      )
-      .then(response => {
-        console.warn(response.data);
-        // this.setState({avatar: response.data.user.avatar});
-      })
-      .catch(err => {
-        console.warn(err.response);
-        ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
-      });
-    // try {
-    // } catch (error) {
-    //   console.warn(error);
-    //   ToastAndroid.show(
-    //     'Erro ao enviar requisição de upload.',
-    //     ToastAndroid.SHORT,
-    //   );
-    // }
+        })
+        .then(response => {
+          this.props.toggleUser(response.data.user);
+          this.setState({user: response.data.user});
+          ToastAndroid.show(
+            'Seu avatar foi alterado com sucesso!',
+            ToastAndroid.SHORT,
+          );
+        })
+        .catch(err => {
+          ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+        });
+    } catch (error) {
+      ToastAndroid.show(
+        'Erro ao enviar requisição de upload.',
+        ToastAndroid.SHORT,
+      );
+    }
   };
 }
+
+const mapStateToProps = (state, props) => ({
+  ...props,
+  user: state.user,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(UserActions, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(ProfileImage);
