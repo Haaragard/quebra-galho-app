@@ -1,6 +1,7 @@
 const actions = {
   TOGGLE_STATUS_USER: 'TOGGLE_STATUS_USER',
   TOGGLE_USER: 'TOGGLE_USER',
+  TOGGLE_LOCATION: 'TOGGLE_LOCATION',
 };
 
 const INITIAL_STATE = {
@@ -8,6 +9,8 @@ const INITIAL_STATE = {
     auth: false,
     token: null,
   },
+  user: {},
+  location: {},
 };
 
 export default function user(state = INITIAL_STATE, action) {
@@ -21,6 +24,11 @@ export default function user(state = INITIAL_STATE, action) {
       return {
         ...state,
         user: action.user,
+      };
+    case actions.TOGGLE_LOCATION:
+      return {
+        ...state,
+        location: action.location,
       };
     default:
       return state;

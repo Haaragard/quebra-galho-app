@@ -21,19 +21,24 @@ import {
 class DivulgarServico extends Component {
   constructor(props) {
     super(props);
+    this._checkLoginUser();
     this.state = {
-      user: {},
+      user: this.props.user.user,
       service: {
+        _id: this.props.service ? this.props.service._id : '',
         nome: 'Desenvolver Software',
         descricao: 'Desenvolvimento de software WEB, Desktop, Mobile.',
         fotoPrincipal: '',
         fotos: [String],
-        createdAt: '2019-11-03',
+        createdAt: '',
       },
     };
-
-    this.getUserData();
   }
+
+  componentDidMount() {
+    _loadServiceData();
+  }
+
   render() {
     return (
       <View style={DivulgarServicosStyle.content}>
@@ -116,31 +121,29 @@ class DivulgarServico extends Component {
     });
   };
 
-  getUserData = async () => {
+  _checkLoginUser = () => {
     if (!this.props.user.status.auth) {
       ToastAndroid.show(
         'É preciso estar logado para acessar essa área!',
         ToastAndroid.SHORT,
       );
       this.props.navigation.navigate('Home');
-    } else {
-      try {
-        await api
-          .post('/user/token', {
-            token: this.props.user.status.token,
-          })
-          .then(response => {
-            this.setState({user: response.data.user});
-          })
-          .catch(err => {
-            ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
-          });
-      } catch (err) {
-        ToastAndroid.show(
-          'Houve um problema com a verificação das suas credenciais!',
-          ToastAndroid.SHORT,
-        );
-      }
+    }
+  };
+
+  _loadServiceData = async () => {
+    if (!this.state.service._id) return false;
+    try {
+      await api
+        .post('/service/id', {service: this.state.service})
+        .then(response => {
+          this.setState({service: response.data.service});
+        })
+        .catch(err => {
+          ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+        });
+    } catch (error) {
+      ToastAndroid.show('Problema ao carregar serviço.', ToastAndroid.SHORT);
     }
   };
 

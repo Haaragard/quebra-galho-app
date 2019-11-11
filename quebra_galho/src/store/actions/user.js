@@ -11,3 +11,10 @@ export function toggleUser(user) {
     user,
   };
 }
+
+export function toggleLocation(location) {
+  return {
+    type: 'TOGGLE_LOCATION',
+    location,
+  };
+}

@@ -10,6 +10,7 @@ import {
 import AsyncStorage from '@react-native-community/async-storage';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+import Geolocation from 'react-native-geolocation-service';
 import * as UserActions from '../store/actions/user';
 import api from '../api';
 
@@ -19,9 +20,21 @@ class LoadingScreen extends Component {
   };
 
   componentDidMount() {
-    this._bootstrapAsync();
-
     requestPermissions();
+    this._bootstrapAsync();
+  }
+
+  render() {
+    return (
+      <View style={{flex: 1, backgroundColor: '#1b2269'}}>
+        <Image
+          style={{width: '100%', height: '80%'}}
+          source={require('../img/logo/quebraGalho.png')}
+        />
+        <ActivityIndicator size="large" color="#0000ff" />
+        <StatusBar barStyle="default" />
+      </View>
+    );
   }
 
   _bootstrapAsync = async () => {
@@ -39,18 +52,24 @@ class LoadingScreen extends Component {
           .post('/user/token', {
             token: userToken,
           })
-          .then(function(response) {
+          .then(async response => {
+            console.log(response);
             status = {
               auth: response.data.auth,
               token: response.data.auth ? userToken : null,
             };
             user = response.data.auth ? response.data.user : {};
+
+            let infosLocation = await getActualLocation(user);
+            user = infosLocation.user;
+            this.props.toggleLocation(infosLocation.location);
           })
-          .catch(function(err) {
+          .catch(err => {
             ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
           });
       }
-    } catch (error) {
+    } catch (err) {
+      console.warn(err);
       ToastAndroid.show(
         'Ocorreu um erro ao tentar realizar a autenticação!',
         ToastAndroid.SHORT,
@@ -60,19 +79,6 @@ class LoadingScreen extends Component {
     this.props.toggleUser(user);
     this.props.navigation.navigate('Home');
   };
-
-  render() {
-    return (
-      <View style={{flex: 1, backgroundColor: '#1b2269'}}>
-        <Image
-          style={{width: '100%', height: '80%'}}
-          source={require('../img/logo/quebraGalho.png')}
-        />
-        <ActivityIndicator size="large" color="#0000ff" />
-        <StatusBar barStyle="default" />
-      </View>
-    );
-  }
 }
 
 async function requestPermissions() {
@@ -135,6 +141,55 @@ async function requestFineLocationPermission() {
       );
     }
   }
+}
+
+async function getActualLocation(user, location) {
+  if (
+    await PermissionsAndroid.check(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+    )
+  ) {
+    await Geolocation.getCurrentPosition(
+      async position => {
+        if (user) {
+          user.latitude = position.coords.latitude;
+          user.longitude = position.coords.longitude;
+
+          await api
+            .post('/user/update/location', {user})
+            .then(response => {
+              ToastAndroid.show(
+                'Sua localização foi atualizada com sucesso!',
+                ToastAndroid.SHORT,
+              );
+            })
+            .catch(err => {
+              ToastAndroid.show(
+                'Não foi possível atualizar sua localização.',
+                ToastAndroid.SHORT,
+              );
+            });
+        }
+
+        location = {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        };
+      },
+      error => {
+        ToastAndroid.show(
+          'Não foi possível pegar a localização atual.',
+          ToastAndroid.SHORT,
+        );
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  }
+
+  return {
+    user: user,
+    location: location,
+  };
 }
 
 const mapStateToProps = (state, props) => ({
