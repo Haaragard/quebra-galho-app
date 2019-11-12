@@ -5,6 +5,7 @@ import {
   Text,
   TouchableOpacity,
   TextInput,
+  Image,
   ToastAndroid,
   Button,
 } from 'react-native';
@@ -30,19 +31,30 @@ class DivulgarServico extends Component {
         descricao: 'Desenvolvimento de software WEB, Desktop, Mobile.',
         fotoPrincipal: '',
         fotos: [String],
+        valor: '',
         createdAt: '',
       },
     };
   }
 
   componentDidMount() {
-    _loadServiceData();
+    // _loadServiceData();
   }
 
   render() {
     return (
       <View style={DivulgarServicosStyle.content}>
         <View style={formStyles.form}>
+          <View style={{width: '100%', height: 150}}>
+            <TouchableOpacity
+              onPress={() => {
+                console.log('Editar imagem');
+              }}>
+              <Image style={{width: 100, height: 100}} />
+            </TouchableOpacity>
+            <Text>Imagem principal</Text>
+          </View>
+
           <View style={formStyles.inputGroupField}>
             <Text style={formStyles.labelInput}>Nome</Text>
             <View style={formStyles.borderInputText}>
@@ -55,6 +67,36 @@ class DivulgarServico extends Component {
                 autoCompleteType="name"
                 onChangeText={this.handleNomeChange}
                 value={this.state.service.nome}
+              />
+            </View>
+          </View>
+
+          {/* <View
+            style={{
+              width: '100%',
+              borderColor: '#000',
+              borderWidth: 1,
+            }}>
+            <View style={{width: '100%', height: 150}}></View>
+            <View style={{flex: 1, height: 20}}>
+              <Text>Adicionar imagens</Text>
+            </View>
+          </View> */}
+
+          <View style={formStyles.inputGroupField}>
+            <Text style={formStyles.labelInput}>Adicionar imagens</Text>
+            <View style={formStyles.borderInputTextBox}>
+              <TextInput
+                style={formStyles.inputTextBox}
+                placeholderTextColor={colors.placeHolderTextColor}
+                placeholder="Descrição de serviço"
+                maxLength={250}
+                multiline
+                numberOfLines={10}
+                autoCapitalize="sentences"
+                autoCompleteType="off"
+                onChangeText={this.handleDescricaoChange}
+                value={this.state.service.descricao}
               />
             </View>
           </View>
@@ -73,6 +115,20 @@ class DivulgarServico extends Component {
                 autoCompleteType="off"
                 onChangeText={this.handleDescricaoChange}
                 value={this.state.service.descricao}
+              />
+            </View>
+          </View>
+
+          <View style={formStyles.inputGroupField}>
+            <Text style={formStyles.labelInput}>Valor</Text>
+            <View style={formStyles.borderInputText}>
+              <TextInput
+                style={formStyles.inputText}
+                placeholderTextColor={colors.placeHolderTextColor}
+                placeholder="00,00"
+                maxLength={40}
+                onChangeText={this.handleNomeChange}
+                value={this.state.service.nome}
               />
             </View>
           </View>

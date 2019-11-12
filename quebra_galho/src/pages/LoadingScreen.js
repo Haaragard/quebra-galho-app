@@ -53,7 +53,6 @@ class LoadingScreen extends Component {
             token: userToken,
           })
           .then(async response => {
-            console.log(response);
             status = {
               auth: response.data.auth,
               token: response.data.auth ? userToken : null,
@@ -69,7 +68,6 @@ class LoadingScreen extends Component {
           });
       }
     } catch (err) {
-      console.warn(err);
       ToastAndroid.show(
         'Ocorreu um erro ao tentar realizar a autenticação!',
         ToastAndroid.SHORT,
@@ -77,7 +75,8 @@ class LoadingScreen extends Component {
     }
     this.props.toggleStatusUser(status);
     this.props.toggleUser(user);
-    this.props.navigation.navigate('Home');
+    // this.props.navigation.navigate('Home');
+    this.props.navigation.navigate('DivulgarServico');
   };
 }
 
@@ -134,7 +133,6 @@ async function requestFineLocationPermission() {
         );
       }
     } catch (error) {
-      console.warn(error);
       ToastAndroid.show(
         'Ocorreu algum erro ao garantir acesso à localização atual.',
         ToastAndroid.SHORT,
@@ -200,7 +198,4 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(UserActions, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LoadingScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoadingScreen);

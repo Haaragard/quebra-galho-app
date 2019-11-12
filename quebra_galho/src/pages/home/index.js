@@ -48,8 +48,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listServicosMaisAcessados: [],
-      listServicosMaisProximos: [],
+      listServicosMaisAcessados: DATA,
+      listServicosMaisProximos: DATA,
     };
   }
 
@@ -70,7 +70,7 @@ class Home extends Component {
     const service = {};
 
     try {
-      api.post('/service/list');
+      // api.post('/service/list');
     } catch (error) {}
   };
 
@@ -175,7 +175,4 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(UserActions, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

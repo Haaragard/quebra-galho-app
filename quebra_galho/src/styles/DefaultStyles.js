@@ -132,7 +132,6 @@ export const formStyles = StyleSheet.create({
     flex: 1,
   },
   inputGroupField: {
-    flex: 1,
     textAlign: 'left',
     marginBottom: 20,
   },

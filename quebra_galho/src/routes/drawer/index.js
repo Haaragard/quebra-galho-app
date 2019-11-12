@@ -93,9 +93,7 @@ class DrawerContent extends Component {
           </TouchableOpacity>
 
           <View style={drawerStyles.separator}></View>
-
           {this.state.auth ? this.buttonMenuMinhaConta() : undefined}
-
           <TouchableOpacity
             onPress={() => {
               this.state.auth
@@ -173,7 +171,4 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(UserActions, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(DrawerContent);
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent);
