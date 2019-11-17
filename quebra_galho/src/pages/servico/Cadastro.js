@@ -205,6 +205,7 @@ class DivulgarServico extends Component {
 
   editName = async () => {
     console.warn('Name editing...');
+    
   };
 }
 

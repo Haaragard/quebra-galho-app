@@ -78,13 +78,19 @@ class DrawerContent extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('Agenda');
+            }}
+            >
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>Agenda</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            this.props.navigation.navigate('Pagamento');
+          }}>
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>
                 Confirmação de pagamento

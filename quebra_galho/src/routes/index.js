@@ -15,6 +15,9 @@ import Cadastro from '../pages/cadastro';
 import Home from '../pages/home';
 import DivulgarServico from '../pages/servico/Cadastro';
 import MinhaConta from '../pages/user';
+import Pagamento from '../pages/pagamento';
+import Agenda from '../pages/agenda';
+
 import {stylesMenu} from '../styles/DefaultStyles';
 
 // import {LocaleConfig} from 'react-native-calendars';
@@ -102,6 +105,26 @@ const HomeStack = createStackNavigator(
   },
 );
 
+const PagamentoStack = createStackNavigator(
+  {
+    Pagamento: {
+      screen: Pagamento,
+      navigationOptions: ({navigation}) => ({
+        title: 'Pagamento',
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      initialRouteName: 'Pagamento',
+      headerLeft: <DrawerIcon navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: stylesMenu.backgroundColor,
+      },
+    }),
+  },
+);
+
 const MinhaContaStack = createStackNavigator(
   {
     MinhaConta: {
@@ -142,11 +165,33 @@ const DivulgarServicoStack = createStackNavigator(
   },
 );
 
+const AgendaStack = createStackNavigator(
+  {
+    Agenda: {
+      screen: Agenda,
+      navigationOptions: ({navigation}) => ({
+        title: 'Agenda',
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      initialRouteName: 'Agenda',
+      headerLeft: <DrawerIcon navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: stylesMenu.backgroundColor,
+      },
+    }),
+  },
+);
+
 const AppNavigator = createDrawerNavigator(
   {
     Home: {screen: HomeStack},
     MinhaConta: {screen: MinhaContaStack},
+    Pagamento: {screen: PagamentoStack},
     DivulgarServico: {screen: DivulgarServicoStack},
+    Agenda: {screen: AgendaStack}
   },
   {
     initialRouteName: 'Home',

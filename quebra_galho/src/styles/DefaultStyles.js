@@ -179,6 +179,19 @@ export const formStyles = StyleSheet.create({
   },
   btCancel: {},
   btClear: {},
+  textLabel: {
+    fontWeight: 'bold'
+  },
+  textValue: {
+    paddingLeft: 4
+  },
+  groupText: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+    padding: 16
+  }
 });
 
 export const colors = {
@@ -298,4 +311,18 @@ export const DivulgarServicosStyle = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+});
+
+export const PagamentoStyle = StyleSheet.create({
+  headerText: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 16
+  },
+  warningText: {
+    textAlign: 'center',
+  },
+  warningTextBold: {
+    fontWeight: 'bold'
+  }
 });
