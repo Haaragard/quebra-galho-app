@@ -126,16 +126,20 @@ export const styles = StyleSheet.create({
 export const formStyles = StyleSheet.create({
   form: {
     flex: 1,
-    width: '70%',
+    margin: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   inputGroup: {
     flex: 1,
   },
   inputGroupField: {
+    width: '100%',
     textAlign: 'left',
     marginBottom: 20,
   },
   labelInput: {
+    width: '100%',
     fontSize: 16,
     marginBottom: 10,
     color: '#4A4A4A',
@@ -146,6 +150,7 @@ export const formStyles = StyleSheet.create({
     borderColor: '#5F5F5F',
     borderRadius: 5,
     flexDirection: 'row',
+    width: '100%',
   },
   inputText: {
     flex: 1,
