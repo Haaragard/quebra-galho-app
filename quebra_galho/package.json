@@ -24,6 +24,7 @@
     "react-native-geolocation-service": "^3.1.0",
     "react-native-gesture-handler": "^1.4.1",
     "react-native-image-crop-picker": "^0.26.1",
+    "react-native-maps": "^0.26.1",
     "react-native-masked-text": "^1.13.0",
     "react-native-reanimated": "^1.2.0",
     "react-native-tabs": "^1.0.9",
