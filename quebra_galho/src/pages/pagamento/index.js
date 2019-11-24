@@ -47,7 +47,23 @@ class Pagamento extends Component {
       </Picker>
     )
   }
-
+  renderReputation = () => {
+    return (
+      <Picker
+        selectedValue={this.state.service}
+        style={{height: 50, width: '100%', }}
+        onValueChange={service =>
+          this.setState({ service })
+        }>
+        <Picker.Item label="Selecione" value="" />
+        <Picker.Item label="Péssimo" value="pessimo" />
+        <Picker.Item label="Ruim" value="ruim" />
+        <Picker.Item label="Regular" value="regular" />
+        <Picker.Item label="Bom" value="bom" />
+        <Picker.Item label="Ótimo" value="otimo" />
+      </Picker>
+    )
+  }
   render() {
     return (
       <View style={styles.content}>
@@ -57,7 +73,12 @@ class Pagamento extends Component {
           </Text>
         </View>
         <ScrollView contentContainerStyle={styles.contentScrollView}>
-          {this.renderSelect()}
+          <View style={formStyles.groupText}>
+            <Text style={formStyles.textLabel}>Serviço:</Text>
+            <Text style={formStyles.textValue}>
+              Serviço
+            </Text>
+          </View>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Freelancer:</Text>
             <Text style={formStyles.textValue}>
@@ -84,16 +105,24 @@ class Pagamento extends Component {
           </View>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Avaliação:</Text>
-            <Text style={formStyles.textValue}>
-              nome
-            </Text>
+            {this.renderReputation()}
           </View>
-          <View style={formStyles.groupText}>
+          <View style={formStyles.btGroup}>
+            <View style={formStyles.btSubmit}>
+              <Button title="Confirmar pagamento" onPress={() => console.warn('pagou')} />
+            </View>
+          </View>
+          <View style={formStyles.btGroup}>
+            <View style={formStyles.btSubmit}>
+              <Button title="Cancelar" onPress={() => {this.props.navigation.navigate('ListaServico');} }/>
+            </View>
+          </View>
+          {/* <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Freelancer:</Text>
             <Text style={formStyles.textValue}>
               nome
             </Text>
-          </View>
+          </View> */}
         </ScrollView>
       </View>
     );

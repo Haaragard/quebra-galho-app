@@ -113,6 +113,12 @@ export const styles = StyleSheet.create({
   descricaoServicoBig: {
     flex: 1,
   },
+  descricaoAgenda:{
+    flexDirection: "column",
+    marginLeft: 10,
+    marginBottom: 10,
+    marginTop: 10,
+  },
   contentFlatListEmpty: {
     flex: 1,
     alignItems: 'center',
@@ -177,7 +183,14 @@ export const formStyles = StyleSheet.create({
     flex: 1,
     width: 200,
   },
-  btCancel: {},
+  btCancel: {
+    flex: 1,
+    alignItems: 'flex-start',
+    marginTop: 20,
+    marginBottom:10,
+    marginLeft: 5,
+    width: 100,
+  },
   btClear: {},
   textLabel: {
     fontWeight: 'bold'

@@ -12,38 +12,39 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
 
+import api, {BASEURL} from '../../api';
 
-
-import {styles, formStyles, stylesMenu} from '../../styles/DefaultStyles';
+import {styles, stylesMenu} from '../../styles/DefaultStyles';
 
 const DATA = [
   {
     _id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     descricao: 'First Item',
+    fotoPrincipal: 'testefoto1',
   },
   {
     _id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
     descricao: 'Second Item',
-
+    fotoPrincipal: 'testefoto2',
   },
   {
     _id: '58694a0f-3da1-47df-bdgs6-1gsgs1e29d72',
     descricao: 'Third Item',
- 
+    fotoPrincipal: 'testefoto3',
   },
   {
     _id: '58694a0f-3gd1-474w-bd96-145571e29d72',
     descricao: 'Fourth Item',
-  
+    fotoPrincipal: 'testefoto4',
   },
   {
     _id: '58dwdwa0f-3da1-471f-bd96-145571e29d72',
     descricao: 'Fifth Item',
-   
+    fotoPrincipal: 'testefoto5',
   },
 ];
 
-class Agenda extends Component {
+class ListaServico extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -80,13 +81,13 @@ class Agenda extends Component {
   render() {
     return (
         <View style={styles.contentServicosProximos}>
-          <Text>Serviços Contratados</Text>
+          <Text>Serviços Realizados</Text>
           <View style={styles.containerFlatListProximo}>
             <FlatList
               style={styles.padraoFLatList}
               ItemSeparatorComponent={() => (
-                  <View style={styles.separatorDown} />)}
-                                                          
+                <View style={styles.separatorDown} />
+              )}
               ListEmptyComponent={() => (
                 <View style={styles.contentFlatListEmpty}>
                   <Text>Nenhum encontrado...</Text>
@@ -98,39 +99,22 @@ class Agenda extends Component {
                 <TouchableOpacity
                   style={styles.touchableServicoBig}
                   onPress={() => {
-                    // this.props.navigation.navigate('Agenda');
+                    this.props.navigation.navigate('Pagamento');
                   }}>
-                  <View style={styles.descricaoServicoBig}>
+                  <View style={styles.dadosServicoBig}>
+                    <Image
+                      source={{uri: BASEURL + item.fotoPrincipal}}
+                      style={styles.imageServicoBig}
+                    />
                     <View style={styles.descricaoServicoBig}>
                       <Text
-                        numberOfLines={8}
-                        style={styles.descricaoAgenda}>
+                        numberOfLines={4}
+                        style={styles.descricaoServicoBig}>
                         {item.descricao}
                       </Text>
                     </View>
-                    <View style={styles.descricaoServicoSmall}>
-                      <Text style={styles.descricaoAgenda}>
-                        Agendado para: 
-                      </Text>
-                    </View>
-                    <View style={styles.descricaoServicoSmall}>
-                      <Text style={styles.descricaoAgenda}>
-                        Horário:  
-                      </Text>
-                    </View>
-                    <View style={styles.descricaoServicoSmall}>
-                      <Text style={styles.descricaoAgenda}>
-                        Local: 
-                      </Text>
-                    </View>
-                  </View>
-                    <View style={formStyles.btCancel}>
-                      <View style={formStyles.btCancel}>
-                        <Button title="Cancelar" onPress={() => {console.warn('cancelou')}} />
-                      </View>
                   </View>
                 </TouchableOpacity>
-                  
               )}
             />
           </View>
@@ -147,4 +131,4 @@ const mapStateToProps = (state, props) => ({
 const mapDispatchToProps = dispatch =>
   bindActionCreators(UserActions, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Agenda);
+export default connect(mapStateToProps, mapDispatchToProps)(ListaServico);

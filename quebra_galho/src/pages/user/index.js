@@ -163,7 +163,7 @@ const openPopup = (title, onSubmit) => (
               message={"Message for DialogInput #1"}
               hintInput ={"HINT INPUT"}
               submitInput={ onSubmit }
-              closeDialog={ () => {this.showDialog(false)}}>
+              closeDialog={ () => {this.showDialog(false)}}>  
   </DialogInput>
 )
 

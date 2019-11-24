@@ -89,7 +89,7 @@ class DrawerContent extends Component {
           </TouchableOpacity>
 
           <TouchableOpacity onPress={() => {
-            this.props.navigation.navigate('Pagamento');
+            this.props.navigation.navigate('ListaServico');
           }}>
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>
