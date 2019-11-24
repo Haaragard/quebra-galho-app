@@ -5,6 +5,8 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
 
+import Dialog from "react-native-dialog";
+
 import api from '../../api';
 
 import {styles, MinhaContaStyles} from '../../styles/DefaultStyles';
@@ -25,6 +27,8 @@ class MinhaConta extends Component {
       dataNascimento: '',
       senha: '******',
       avatar: '',
+      isDialogVisible: false,
+      popupText: ''
     };
   }
 
@@ -57,7 +61,7 @@ class MinhaConta extends Component {
                 {this.state.email}
               </Text>
               <TouchableOpacity
-                onPress={() => this.editName()}
+                onPress={() => this.editEmail()}
                 style={MinhaContaStyles.editIcon}>
                 <Icon name="edit" size={20} color="#000" />
               </TouchableOpacity>
@@ -70,7 +74,7 @@ class MinhaConta extends Component {
               {this.state.senha}
             </Text>
             <TouchableOpacity
-              onPress={() => this.editName()}
+              onPress={() => this.editSenha()}
               style={MinhaContaStyles.editIcon}>
               <Icon name="edit" size={20} color="#000" />
             </TouchableOpacity>
@@ -83,14 +87,36 @@ class MinhaConta extends Component {
               {this.state.nome + ' ' + this.state.sobrenome}
             </Text>
             <TouchableOpacity
-              onPress={() => this.editName()}
+              onPress={() => this.editCertificado()}
               style={MinhaContaStyles.editIcon}>
               <Icon name="edit" size={20} color="#000" />
             </TouchableOpacity>
           </View>
+          <Dialog.Container visible={this.state.isDialogVisible}>
+            <Dialog.Title>Editar nome</Dialog.Title>
+            <Dialog.Input
+              onChangeText= { (text) => {this.setState({
+                popupText: text
+              })} } >
+            </Dialog.Input>
+            <Dialog.Button label="Cancelar" onPress={this.handleCancel} />
+            <Dialog.Button label="Confirma" onPress={this.handleSubmit} />
+          </Dialog.Container>
         </View>
       </View>
     );
+  }
+
+  showDialog = () => {
+    this.setState({ isDialogVisible: true });
+  };
+
+  handleCancel = () => {
+    this.setState({ isDialogVisible: false });
+  };
+
+  handleSubmit = () => {
+    
   }
 
   getUserData = async () => {
@@ -115,11 +141,31 @@ class MinhaConta extends Component {
         ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
       });
   };
-
-  editName = async () => {
-    console.warn('Name editing...');
+  
+  editName = async ()=> {
+    console.warn('nome correto')
+    this.showDialog();
+  };
+  editEmail = async () => {
+    // this.showDialog();
+  };
+  editSenha = async () => {
+    console.warn('Senha editing ...')
+  };
+  editCertificado = async () => {
+    console.warn('Certificado editing ...')
   };
 }
+
+const openPopup = (title, onSubmit) => (
+  <DialogInput isDialogVisible={true}
+              title={title}
+              message={"Message for DialogInput #1"}
+              hintInput ={"HINT INPUT"}
+              submitInput={ onSubmit }
+              closeDialog={ () => {this.showDialog(false)}}>  
+  </DialogInput>
+)
 
 const mapStateToProps = (state, props) => ({
   ...props,
@@ -133,3 +179,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(MinhaConta);
+

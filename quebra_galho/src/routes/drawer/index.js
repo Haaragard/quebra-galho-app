@@ -13,173 +13,173 @@ import Icon from 'react-native-vector-icons/Entypo';
 import ProfileImage from '../../components/user/profileImage';
 
 const UserHeader = props => (
-	<View style={drawerStyles.containerUser}>
-		<View style={drawerStyles.containerUserImg}>
-			<ProfileImage height={80} width={80} />
-		</View>
-		<View style={drawerStyles.containerUserData}>
-			<View style={drawerStyles.containerGroupUserData}>
-				<Text style={drawerStyles.textUserDataLabel}>Nome:</Text>
-				<Text style={drawerStyles.textUserData}>{props.user.user.nome}</Text>
-			</View>
-			<View style={drawerStyles.containerGroupUserData}>
-				<Text style={drawerStyles.textUserDataLabel}>CPF:</Text>
-				<Text style={drawerStyles.textUserData}>{props.user.user.cpf}</Text>
-			</View>
-		</View>
-	</View>
+  <View style={drawerStyles.containerUser}>
+    <View style={drawerStyles.containerUserImg}>
+      <ProfileImage height={80} width={80} />
+    </View>
+    <View style={drawerStyles.containerUserData}>
+      <View style={drawerStyles.containerGroupUserData}>
+        <Text style={drawerStyles.textUserDataLabel}>Nome:</Text>
+        <Text style={drawerStyles.textUserData}>{props.user.user.nome}</Text>
+      </View>
+      <View style={drawerStyles.containerGroupUserData}>
+        <Text style={drawerStyles.textUserDataLabel}>CPF:</Text>
+        <Text style={drawerStyles.textUserData}>{props.user.user.cpf}</Text>
+      </View>
+    </View>
+  </View>
 );
 
 class DrawerContent extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			auth: false,
-			user: {},
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      auth: false,
+      user: {},
+    };
+  }
 
-	componentDidMount() {
-		this.requestUserData();
-	}
+  componentDidMount() {
+    this.requestUserData();
+  }
 
-	render() {
-		return (
-			<View style={drawerStyles.container}>
-				<View style={drawerStyles.header}>
-					{this.state.auth ? <UserHeader user={this.state} /> : null}
-				</View>
-				<View style={drawerStyles.content}>
-					<TouchableOpacity
-						onPress={() => {
-							this.props.navigation.navigate('Home');
-						}}>
-						<View style={drawerStyles.containerMenuLine}>
-							<Text style={drawerStyles.textContainerMenuLine}>Home</Text>
-						</View>
-					</TouchableOpacity>
+  render() {
+    return (
+      <View style={drawerStyles.container}>
+        <View style={drawerStyles.header}>
+          {this.state.auth ? <UserHeader user={this.state} /> : null}
+        </View>
+        <View style={drawerStyles.content}>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('Home');
+            }}>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>Home</Text>
+            </View>
+          </TouchableOpacity>
 
-					<TouchableOpacity
-						onPress={() => {
-							this._checkLoginUser('DivulgarServico');
-						}}>
-						<View style={drawerStyles.containerMenuLine}>
-							<Text style={drawerStyles.textContainerMenuLine}>
-								Divulgar Serviços
-							</Text>
-						</View>
-					</TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this._checkLoginUser('DivulgarServico');
+            }}>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>
+                Divulgar Serviços
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-					<TouchableOpacity>
-						<View style={drawerStyles.containerMenuLine}>
-							<Text style={drawerStyles.textContainerMenuLine}>
-								Histórico de Serviços
-							</Text>
-						</View>
-					</TouchableOpacity>
+          <TouchableOpacity>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>
+                Histórico de Serviços
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-					<TouchableOpacity>
-						<View style={drawerStyles.containerMenuLine}>
-							<Text style={drawerStyles.textContainerMenuLine}>Agenda</Text>
-						</View>
-					</TouchableOpacity>
+          <TouchableOpacity>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>Agenda</Text>
+            </View>
+          </TouchableOpacity>
 
-					<TouchableOpacity>
-						<View style={drawerStyles.containerMenuLine}>
-							<Text style={drawerStyles.textContainerMenuLine}>
-								Confirmação de pagamento
-							</Text>
-						</View>
-					</TouchableOpacity>
+          <TouchableOpacity>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>
+                Confirmação de pagamento
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-					<View style={drawerStyles.separator}></View>
-					{this.state.auth ? this.buttonMenuMinhaConta() : undefined}
-					<TouchableOpacity
-						onPress={() => {
-							this.state.auth
-								? this.handlerLogout()
-								: this.props.navigation.navigate('Login');
-						}}>
-						<View style={drawerStyles.containerMenuLine}>
-							<View style={drawerStyles.containerIcon}>
-								<Icon
-									name={this.state.auth ? 'log-out' : 'login'}
-									size={30}
-									color="#000"
-								/>
-							</View>
-							<Text style={drawerStyles.textMenu}>
-								{this.state.auth ? 'Logout' : 'Login'}
-							</Text>
-						</View>
-					</TouchableOpacity>
-				</View>
-			</View>
-		);
-	}
+          <View style={drawerStyles.separator}></View>
+          {this.state.auth ? this.buttonMenuMinhaConta() : undefined}
+          <TouchableOpacity
+            onPress={() => {
+              this.state.auth
+                ? this.handlerLogout()
+                : this.props.navigation.navigate('Login');
+            }}>
+            <View style={drawerStyles.containerMenuLine}>
+              <View style={drawerStyles.containerIcon}>
+                <Icon
+                  name={this.state.auth ? 'log-out' : 'login'}
+                  size={30}
+                  color="#000"
+                />
+              </View>
+              <Text style={drawerStyles.textMenu}>
+                {this.state.auth ? 'Logout' : 'Login'}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 
-	_checkLoginUser = page => {
-		if (!this.props.user.status.auth) {
-			ToastAndroid.show(
-				'É preciso estar logado para acessar essa área!',
-				ToastAndroid.SHORT,
-			);
-		} else {
-			this.props.navigation.navigate(page);
-		}
-	};
+  _checkLoginUser = page => {
+    if (!this.props.user.status.auth) {
+      ToastAndroid.show(
+        'É preciso estar logado para acessar essa área!',
+        ToastAndroid.SHORT,
+      );
+    } else {
+      this.props.navigation.navigate(page);
+    }
+  };
 
-	requestUserData = async () => {
-		if (this.props.user.status.auth) {
-			let response = await api.post('/user/token', {
-				token: this.props.user.status.token,
-			});
-			if (response.data.auth) {
-				this.setState({user: response.data.user});
-				this.setState({auth: response.data.auth});
-			}
-		}
-	};
+  requestUserData = async () => {
+    if (this.props.user.status.auth) {
+      let response = await api.post('/user/token', {
+        token: this.props.user.status.token,
+      });
+      if (response.data.auth) {
+        this.setState({user: response.data.user});
+        this.setState({auth: response.data.auth});
+      }
+    }
+  };
 
-	handlerLogout = async () => {
-		try {
-			await AsyncStorage.removeItem('@QuebraGalhoOficial:token', err => {
-				if (err) throw Exception('Erro no AsyncStorage');
-				this.props.toggleStatusUser({auth: false, token: null});
-				this.props.toggleUser({});
-				this.props.navigation.navigate('LoadingScreen');
-			});
-		} catch (error) {
-			ToastAndroid.show(
-				'Não foi possível realizar o Logout.',
-				ToastAndroid.SHORT,
-			);
-		}
-	};
+  handlerLogout = async () => {
+    try {
+      await AsyncStorage.removeItem('@QuebraGalhoOficial:token', err => {
+        if (err) throw Exception('Erro no AsyncStorage');
+        this.props.toggleStatusUser({auth: false, token: null});
+        this.props.toggleUser({});
+        this.props.navigation.navigate('LoadingScreen');
+      });
+    } catch (error) {
+      ToastAndroid.show(
+        'Não foi possível realizar o Logout.',
+        ToastAndroid.SHORT,
+      );
+    }
+  };
 
-	buttonMenuMinhaConta = () => (
-		<TouchableOpacity
-			onPress={() => this.props.navigation.navigate('MinhaConta')}>
-			<View style={drawerStyles.containerMenuLine}>
-				<View style={drawerStyles.containerIcon}>
-					{/* <Icon
+  buttonMenuMinhaConta = () => (
+    <TouchableOpacity
+      onPress={() => this.props.navigation.navigate('MinhaConta')}>
+      <View style={drawerStyles.containerMenuLine}>
+        <View style={drawerStyles.containerIcon}>
+          {/* <Icon
             name={this.state.auth ? 'log-out' : 'login'}
             size={30}
             color="#000"
           /> */}
-				</View>
-				<Text style={drawerStyles.textMenu}>Minha conta</Text>
-			</View>
-		</TouchableOpacity>
-	);
+        </View>
+        <Text style={drawerStyles.textMenu}>Minha conta</Text>
+      </View>
+    </TouchableOpacity>
+  );
 }
 
 const mapStateToProps = (state, props) => ({
-	...props,
-	user: state.user,
+  ...props,
+  user: state.user,
 });
 
 const mapDispatchToProps = dispatch =>
-	bindActionCreators(UserActions, dispatch);
+  bindActionCreators(UserActions, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DrawerContent);
