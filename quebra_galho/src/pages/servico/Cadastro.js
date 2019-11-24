@@ -14,6 +14,8 @@ import {
 import {connect} from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 import {TextInputMask} from 'react-native-masked-text';
+import MapView, {Marker} from 'react-native-maps';
+import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 
 import api from '../../api';
 
@@ -36,6 +38,8 @@ class DivulgarServico extends Component {
         fotos: [String],
         valor: '',
         createdAt: '',
+        latitude: this.props.user.user.latitude,
+        longitude: this.props.user.user.longitude,
       },
       newImage: '',
       newImageList: [],
@@ -44,6 +48,10 @@ class DivulgarServico extends Component {
 
   componentDidMount() {
     // _loadServiceData();
+  }
+
+  componentDidUpdate() {
+    console.log(this.state);
   }
 
   render() {
@@ -216,6 +224,67 @@ class DivulgarServico extends Component {
             </View>
 
             <View style={formStyles.inputGroupField}>
+              <Text style={formStyles.labelInput}>Localização</Text>
+              <Text style={formStyles.tinyWarningText}>
+                Caso não indique o local, será usado sua localização atual.
+              </Text>
+              <View>
+                <MapView
+                  style={{width: '100%', height: 300, marginBottom: 10}}
+                  initialRegion={{
+                    latitude: Number(this.state.service.latitude),
+                    longitude: Number(this.state.service.longitude),
+                    latitudeDelta: 0.0043,
+                    longitudeDelta: 0.0034,
+                  }}
+                  rotateEnabled={false}
+                  pitchEnabled={false}
+                  toolbarEnabled={false}>
+                  <Marker
+                    draggable
+                    coordinate={{
+                      latitude: Number(this.state.service.latitude),
+                      longitude: Number(this.state.service.longitude),
+                      latitudeDelta: 0.0043,
+                      longitudeDelta: 0.0034,
+                    }}
+                    onDragEnd={e => handleCoordinateMarkerMap(e)}
+                  />
+                </MapView>
+                {/* <GooglePlacesAutocomplete
+                  placeholder="Cidade, Estado"
+                  minLength={2}
+                  autoFocus={false}
+                  returnKeyType={'default'}
+                  fetchDetails={true}
+                  query={{
+                    key: 'AIzaSyDhYHf6r0YMI3q4-KveHMPthmChrB_4N-M',
+                    language: 'pt',
+                    types: '(cities)',
+                  }}
+                  styles={{
+                    textInputContainer: {
+                      backgroundColor: 'rgba(0,0,0,0)',
+                      borderTopWidth: 0,
+                      borderBottomWidth: 0,
+                    },
+                    textInput: {
+                      marginLeft: 0,
+                      marginRight: 0,
+                      height: 38,
+                      color: '#5d5d5d',
+                      fontSize: 16,
+                    },
+                    predefinedPlacesDescription: {
+                      color: '#1faadb',
+                    },
+                  }}
+                  currentLocation={false}
+                /> */}
+              </View>
+            </View>
+
+            <View style={formStyles.inputGroupField}>
               <Text style={formStyles.labelInput}>Valor</Text>
               <View style={formStyles.borderInputText}>
                 <TextInputMask
@@ -242,6 +311,10 @@ class DivulgarServico extends Component {
       </View>
     );
   }
+
+  handleCoordinateMarkerMap = coordinate => {
+    console.warn(coordinate);
+  };
 
   handleChangeImgPrincipal = () => {
     ImagePicker.openPicker({

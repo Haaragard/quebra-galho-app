@@ -75,8 +75,8 @@ class LoadingScreen extends Component {
     }
     this.props.toggleStatusUser(status);
     this.props.toggleUser(user);
-    // this.props.navigation.navigate('Home');
-    this.props.navigation.navigate('DivulgarServico');
+    this.props.navigation.navigate('Home');
+    // this.props.navigation.navigate('DivulgarServico');
   };
 }
 
