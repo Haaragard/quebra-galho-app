@@ -70,7 +70,10 @@ class DrawerContent extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this._checkLoginUser('DivulgarServico');
+            }}>
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>
                 Histórico de Serviços
@@ -78,13 +81,19 @@ class DrawerContent extends Component {
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this._checkLoginUser('Agenda');
+            }}>
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>Agenda</Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this._checkLoginUser('ListaServico');
+            }}>
             <View style={drawerStyles.containerMenuLine}>
               <Text style={drawerStyles.textContainerMenuLine}>
                 Confirmação de pagamento
