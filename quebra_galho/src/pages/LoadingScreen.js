@@ -43,40 +43,93 @@ class LoadingScreen extends Component {
       token: null,
     };
     let user = {};
-
     try {
       let userToken = await AsyncStorage.getItem('@QuebraGalhoOficial:token');
 
-      if (userToken) {
-        await api
-          .post('/user/token', {
-            token: userToken,
-          })
-          .then(async response => {
-            status = {
-              auth: response.data.auth,
-              token: response.data.auth ? userToken : null,
-            };
-            user = response.data.auth ? response.data.user : {};
-
-            let infosLocation = await getActualLocation(user);
-            user = infosLocation.user;
-            this.props.toggleLocation(infosLocation.location);
-          })
-          .catch(err => {
-            ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
-          });
-      }
+      let userByToken = await this.getUserByToken(userToken);
+      status = userByToken.status;
+      user = userByToken.user;
     } catch (err) {
       ToastAndroid.show(
         'Ocorreu um erro ao tentar realizar a autenticação!',
         ToastAndroid.SHORT,
       );
     }
+
+    await Geolocation.getCurrentPosition(
+      async position => {
+        let location = {
+          type: 'Pointer',
+          coordinates: [position.coords.longitude, position.coords.latitude],
+        };
+
+        user.location = location;
+
+        await this.updateAtualUserLocation(user);
+        this.applyChangesAndGoForward(status, user, location);
+      },
+      error => {
+        ToastAndroid.show(
+          'Não foi possível pegar a localização atual.',
+          ToastAndroid.SHORT,
+        );
+        this.applyChangesAndGoForward(status, user);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  };
+
+  applyChangesAndGoForward = (status, user, location = {}) => {
     this.props.toggleStatusUser(status);
     this.props.toggleUser(user);
+    this.props.toggleLocation(location);
     this.props.navigation.navigate('Home');
-    // this.props.navigation.navigate('DivulgarServico');
+  };
+
+  getUserByToken = async userToken => {
+    let status = {};
+    let user = {};
+
+    await api
+      .post('/user/token', {
+        token: userToken,
+      })
+      .then(response => {
+        status = {
+          auth: response.data.auth,
+          token: response.data.auth ? userToken : null,
+        };
+        user = response.data.auth ? response.data.user : {};
+      })
+      .catch(err => {
+        ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+      });
+
+    return {status, user};
+  };
+
+  updateAtualUserLocation = async user => {
+    try {
+      await api
+        .post('/user/update/location', {user: JSON.stringify(user)})
+        .then(response => {
+          ToastAndroid.show(
+            'Sua localização foi atualizada com sucesso!',
+            ToastAndroid.SHORT,
+          );
+        })
+        .catch(err => {
+          ToastAndroid.show(
+            'Não foi possível atualizar sua localização.',
+            ToastAndroid.SHORT,
+          );
+        });
+    } catch (error) {
+      ToastAndroid.show(
+        'Não foi possível atualizar sua localização.',
+        ToastAndroid.SHORT,
+      );
+    }
   };
 }
 
@@ -139,55 +192,6 @@ async function requestFineLocationPermission() {
       );
     }
   }
-}
-
-async function getActualLocation(user, location) {
-  if (
-    await PermissionsAndroid.check(
-      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-    )
-  ) {
-    await Geolocation.getCurrentPosition(
-      async position => {
-        if (user) {
-          user.latitude = position.coords.latitude;
-          user.longitude = position.coords.longitude;
-
-          await api
-            .post('/user/update/location', {user})
-            .then(response => {
-              ToastAndroid.show(
-                'Sua localização foi atualizada com sucesso!',
-                ToastAndroid.SHORT,
-              );
-            })
-            .catch(err => {
-              ToastAndroid.show(
-                'Não foi possível atualizar sua localização.',
-                ToastAndroid.SHORT,
-              );
-            });
-        }
-
-        location = {
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        };
-      },
-      error => {
-        ToastAndroid.show(
-          'Não foi possível pegar a localização atual.',
-          ToastAndroid.SHORT,
-        );
-      },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-    );
-  }
-
-  return {
-    user: user,
-    location: location,
-  };
 }
 
 const mapStateToProps = (state, props) => ({

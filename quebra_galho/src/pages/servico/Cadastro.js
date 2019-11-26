@@ -38,20 +38,11 @@ class DivulgarServico extends Component {
         fotos: [String],
         valor: '',
         createdAt: '',
-        latitude: this.props.user.user.latitude,
-        longitude: this.props.user.user.longitude,
+        location: this.props.user.location,
       },
       newImage: '',
       newImageList: [],
     };
-  }
-
-  componentDidMount() {
-    // _loadServiceData();
-  }
-
-  componentDidUpdate() {
-    console.log(this.state);
   }
 
   render() {
@@ -232,8 +223,12 @@ class DivulgarServico extends Component {
                 <MapView
                   style={{width: '100%', height: 300, marginBottom: 10}}
                   initialRegion={{
-                    latitude: Number(this.state.service.latitude),
-                    longitude: Number(this.state.service.longitude),
+                    latitude: Number(
+                      this.state.service.location.coordinates[1],
+                    ),
+                    longitude: Number(
+                      this.state.service.location.coordinates[0],
+                    ),
                     latitudeDelta: 0.0043,
                     longitudeDelta: 0.0034,
                   }}
@@ -243,8 +238,12 @@ class DivulgarServico extends Component {
                   <Marker
                     draggable
                     coordinate={{
-                      latitude: Number(this.state.service.latitude),
-                      longitude: Number(this.state.service.longitude),
+                      latitude: Number(
+                        this.state.service.location.coordinates[1],
+                      ),
+                      longitude: Number(
+                        this.state.service.location.coordinates[0],
+                      ),
                       latitudeDelta: 0.0043,
                       longitudeDelta: 0.0034,
                     }}
@@ -457,6 +456,7 @@ class DivulgarServico extends Component {
         fotos: [String],
         valor: '',
         createdAt: '',
+        location: this.props.user.location,
       },
       newImage: '',
       newImageList: [],
