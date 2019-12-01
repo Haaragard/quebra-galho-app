@@ -19,6 +19,7 @@ import ListaServico from '../pages/listaServico';
 import Pagamento from '../pages/pagamento';
 
 import Agenda from '../pages/agenda';
+import GerenciaServico from '../pages/gerenciarServico';
 
 import {stylesMenu} from '../styles/DefaultStyles';
 
@@ -206,6 +207,25 @@ const ListaServicoStack = createStackNavigator(
     }),
   },
 );
+const GerenciaServicoStack = createStackNavigator(
+  {
+    GerenciaServico: {
+      screen: GerenciaServico,
+      navigationOptions: ({navigation}) => ({
+        title: 'Gerencia Servico',
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      initialRouteName: 'GerenciaServico',
+      headerLeft: <DrawerIcon navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: stylesMenu.backgroundColor,
+      },
+    }),
+  },
+);
 
 const AppNavigator = createDrawerNavigator(
   {
@@ -215,6 +235,7 @@ const AppNavigator = createDrawerNavigator(
     ListaServico: {screen: ListaServicoStack},
     DivulgarServico: {screen: DivulgarServicoStack},
     Agenda: {screen: AgendaStack},
+    GerenciaServico: {screen: GerenciaServicoStack},
   },
   {
     initialRouteName: 'Home',

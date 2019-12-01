@@ -92,10 +92,13 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   descricaoServicoSmall: {
-    flex: 1,
+    flexDirection: 'row',
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 5,
   },
   touchableServicoBig: {
-    height: 110,
+    height: 150,
     width: '100%',
     backgroundColor: '#F2F2F2',
   },
@@ -110,8 +113,11 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     backgroundColor: '#fff',
   },
-  infosServicoListagemSmall: {
+  descricaoAgendaContainer: {
     flex: 1,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 15,
   },
   nomeServicoListagemSmall: {
     width: '100%',
@@ -124,8 +130,14 @@ export const styles = StyleSheet.create({
   descricaoAgenda: {
     flexDirection: 'column',
     marginLeft: 10,
-    marginBottom: 10,
-    marginTop: 10,
+    marginBottom: 5,
+    marginTop: 5,
+  },
+  descricaoAgenda: {
+    // flexDirection: "column",
+    // marginLeft: 10,
+    // marginBottom: 10,
+    // marginTop: 10,
   },
   contentFlatListEmpty: {
     flex: 1,
@@ -349,6 +361,12 @@ export const DivulgarServicosStyle = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: 'center',
+  },
+});
+
+export const GerenciarServicoStyle = StyleSheet.create({
+  headerText: {
+    textAlign: 'center',
   },
 });
 

@@ -11,10 +11,8 @@ import {
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
-
-
-
 import {styles, formStyles, stylesMenu} from '../../styles/DefaultStyles';
+// import { sep } from 'path'; wtf
 
 const DATA = [
   {
@@ -46,9 +44,17 @@ const DATA = [
 class Agenda extends Component {
   constructor(props) {
     super(props);
+    this.colors = [stylesMenu.backgroundColor, '#7fc2f0', '#0072bf']
+
     this.state = {
-      listServicosMaisProximos: DATA,
+      listServicosMaisProximos: DATA
     };
+
+    this._resetColorIndex()
+  }
+
+  _resetColorIndex() {
+    this.colorIndex = -1
   }
 
   componentDidMount() {
@@ -84,8 +90,6 @@ class Agenda extends Component {
           <View style={styles.containerFlatListProximo}>
             <FlatList
               style={styles.padraoFLatList}
-              ItemSeparatorComponent={() => (
-                  <View style={styles.separatorDown} />)}
                                                           
               ListEmptyComponent={() => (
                 <View style={styles.contentFlatListEmpty}>
@@ -94,50 +98,73 @@ class Agenda extends Component {
               )}
               data={this.state.listServicosMaisProximos}
               keyExtractor={(item, index) => item._id}
-              renderItem={({item, index}) => (
-                <TouchableOpacity
-                  style={styles.touchableServicoBig}
-                  onPress={() => {
-                    // this.props.navigation.navigate('Agenda');
-                  }}>
-                  <View style={styles.descricaoServicoBig}>
-                    <View style={styles.descricaoServicoBig}>
-                      <Text
-                        numberOfLines={8}
-                        style={styles.descricaoAgenda}>
-                        {item.descricao}
-                      </Text>
-                    </View>
-                    <View style={styles.descricaoServicoSmall}>
-                      <Text style={styles.descricaoAgenda}>
-                        Agendado para: 
-                      </Text>
-                    </View>
-                    <View style={styles.descricaoServicoSmall}>
-                      <Text style={styles.descricaoAgenda}>
-                        Horário:  
-                      </Text>
-                    </View>
-                    <View style={styles.descricaoServicoSmall}>
-                      <Text style={styles.descricaoAgenda}>
-                        Local: 
-                      </Text>
-                    </View>
-                  </View>
-                    <View style={formStyles.btCancel}>
-                      <View style={formStyles.btCancel}>
-                        <Button title="Cancelar" onPress={() => {console.warn('cancelou')}} />
+              renderItem={({item, index}) => {
+                if (this.colorIndex >= (this.colors.length - 1)) {
+                  console.warn('reset')
+                  this._resetColorIndex() // reseta contador
+                }
+                
+                console.warn('old: '+ this.colorIndex)
+                this.colorIndex = this.colorIndex + 1
+                console.warn('new: '+ this.colorIndex)
+                const color = this.colors[this.colorIndex];
+                // console.warn(color, this.colorIndex)
+                return (
+                  <View style={{marginTop: 10}}>
+                    <TouchableOpacity
+                      style={{...styles.touchableServicoBig, 
+                        marginLeft: 5, 
+                        marginRight: 200, 
+                        backgroundColor: color}}
+                      onPress={() => {
+                        // this.props.navigation.navigate('Agenda');
+                      }}>
+                      <View style={styles.descricaoAgendaContainer}>
+                        <View style={styles.descricaoServicoBig}>
+                          <Text
+                            numberOfLines={8}
+                            style={styles.descricaoAgenda}>
+                            {item.descricao}
+                          </Text>
+                        </View>
+                        <View style={styles.descricaoServicoSmall}>
+                          <Text style={styles.descricaoAgenda}>
+                            Agendado para: 
+                          </Text>
+                        </View>
+                        <View style={styles.descricaoServicoSmall}>
+                          <Text style={styles.descricaoAgenda}>
+                            Horário:  
+                          </Text>
+                        </View>
+                        <View style={styles.descricaoServicoSmall}>
+                          <Text style={styles.descricaoAgenda}>
+                            Local: 
+                          </Text>
+                        </View>
                       </View>
+                    </TouchableOpacity>
+                    <View style={{...formStyles.btCancel, 
+                        marginTop: 5, 
+                        marginBottom: 10}}>
+                      <Button 
+                        color={'#e36868'}
+                        title="Cancelar" 
+                        onPress={() => {console.warn('cancelou')}} />
+                    </View>
                   </View>
-                </TouchableOpacity>
-                  
               )}
+            }
             />
           </View>
         </View>
     );
   }
 }
+
+// remover sep.
+// criar apenas margens entre os servcos
+// trocar a cor de, escuro
 
 const mapStateToProps = (state, props) => ({
   ...props,
