@@ -9,12 +9,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import api, {BASE_URL_IMG_AVATAR_USER} from '../../../api';
 
-const imageUploadConfig = {
-  headers: {
-    Accept: 'application/json',
-    'Content-Type': 'multipart/form-data; charset=utf-8;',
-  },
-};
 class ProfileImage extends Component {
   constructor(props) {
     super(props);

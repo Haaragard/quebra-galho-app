@@ -110,11 +110,19 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     backgroundColor: '#fff',
   },
-  descricaoServicoBig: {
+  infosServicoListagemSmall: {
     flex: 1,
   },
-  descricaoAgenda:{
-    flexDirection: "column",
+  nomeServicoListagemSmall: {
+    width: '100%',
+    height: 20,
+    fontWeight: 'bold',
+  },
+  descricaoServicoListagemSmall: {
+    flex: 1,
+  },
+  descricaoAgenda: {
+    flexDirection: 'column',
     marginLeft: 10,
     marginBottom: 10,
     marginTop: 10,
@@ -205,24 +213,24 @@ export const formStyles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-start',
     marginTop: 20,
-    marginBottom:10,
+    marginBottom: 10,
     marginLeft: 5,
     width: 100,
   },
   btClear: {},
   textLabel: {
-    fontWeight: 'bold'
+    fontWeight: 'bold',
   },
   textValue: {
-    paddingLeft: 4
+    paddingLeft: 4,
   },
   groupText: {
     flex: 1,
     width: '100%',
     alignItems: 'flex-start',
     flexDirection: 'row',
-    padding: 16
-  }
+    padding: 16,
+  },
 });
 
 export const colors = {
@@ -348,12 +356,12 @@ export const PagamentoStyle = StyleSheet.create({
   headerText: {
     flex: 1,
     alignItems: 'center',
-    padding: 16
+    padding: 16,
   },
   warningText: {
     textAlign: 'center',
   },
   warningTextBold: {
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });

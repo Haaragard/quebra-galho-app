@@ -49,136 +49,9 @@ class Cadastro extends Component {
       todayDate: moment(new Date()).format('DD/MM/YYYY'),
       location: this.props.user.location,
     };
-
-    console.log(this.props);
   }
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
-  static navigationOptions = {
-    title: 'Cadastro',
-  };
-
-  handleNomeChange = nome => {
-    this.setState({nome});
-  };
-
-  handleSobrenomeChange = sobrenome => {
-    this.setState({sobrenome});
-  };
-
-  handleEmailChange = email => {
-    this.setState({email});
-  };
-
-  handleCpfChange = cpf => {
-    this.setState({cpf});
-  };
-
-  handlePasswordChange = password => {
-    this.setState({password});
-  };
-
-  handlePasswordConfirmChange = passwordConfirm => {
-    this.setState({passwordConfirm});
-  };
-
-  handleShowPass = () => {
-    this.setState({showPass: !this.state.showPass});
-  };
-
-  handleShowPassConfirm = () => {
-    this.setState({showPassConfirm: !this.state.showPassConfirm});
-  };
-
-  validationPass = (password, passwordConfirm) => {
-    if (password === passwordConfirm) {
-      return true;
-    } else {
-      ToastAndroid.show('Senhas não coincidem!', ToastAndroid.SHORT);
-      return false;
-    }
-  };
-
-  validationDataNascimento = dataNascimento => {
-    let dateNascUser = moment(dataNascimento, 'DD/MM/YYYY').add(18, 'years');
-    let dateNow = moment(this.state.todayDate, 'DD/MM/YYYY');
-
-    return moment(dateNow).isAfter(dateNascUser) ? true : false;
-  };
-
-  pressBtnCadastrar = () => {
-    let regex = /(?!(\d)\1{2}.\1{3}.\1{3}-\1{2})\d{3}\.\d{3}\.\d{3}\-\d{2}/gm;
-    if (!this.state.nome) {
-      ToastAndroid.show(
-        'É necessário preencher o campo de "Nome"',
-        ToastAndroid.SHORT,
-      );
-    } else if (!this.state.email) {
-      ToastAndroid.show(
-        'É necessário preencher o campo de "E-mail"',
-        ToastAndroid.SHORT,
-      );
-    } else if (!this.state.cpf) {
-      {
-        ToastAndroid.show(
-          'É necessário preencher o campo de "CPF"',
-          ToastAndroid.SHORT,
-        );
-      }
-    } else if (!regex.test(this.state.cpf)) {
-      ToastAndroid.show('O CPF digitado é inválido.', ToastAndroid.SHORT);
-    } else if (!this.validationDataNascimento(this.state.dataNasc)) {
-      ToastAndroid.show(
-        'Idade do usuário precisa ser maior de 18!',
-        ToastAndroid.SHORT,
-      );
-    } else if (!this.state.password) {
-      ToastAndroid.show(
-        'É necessário preencher o campo de "Senha"',
-        ToastAndroid.SHORT,
-      );
-    } else if (
-      this.validationPass(this.state.password, this.state.passwordConfirm)
-    ) {
-      this._store();
-    }
-  };
-
-  _store = async () => {
-    let dataStore = {
-      nome: this.state.nome,
-      sobrenome: this.state.sobrenome,
-      email: this.state.email,
-      cpf: this.state.cpf,
-      senha: this.state.password,
-      dataNascimento: this.state.dataNasc
-        .split('/')
-        .reverse()
-        .join('-'),
-    };
-    try {
-      await api
-        .post('/user/store', dataStore)
-        .then(response => {
-          ToastAndroid.show(
-            'Cadastro realizado com sucesso!',
-            ToastAndroid.SHORT,
-          );
-          this.props.navigation.navigate('Login');
-        })
-        .catch(err => {
-          ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
-        });
-    } catch (error) {
-      ToastAndroid.show(
-        'Ocorreu um erro ao tentar cadastrar.',
-        ToastAndroid.SHORT,
-      );
-    }
-  };
+  componentDidMount() {}
 
   render() {
     return (
@@ -312,6 +185,130 @@ class Cadastro extends Component {
       </View>
     );
   }
+
+  static navigationOptions = {
+    title: 'Cadastro',
+  };
+
+  handleNomeChange = nome => {
+    this.setState({nome});
+  };
+
+  handleSobrenomeChange = sobrenome => {
+    this.setState({sobrenome});
+  };
+
+  handleEmailChange = email => {
+    this.setState({email});
+  };
+
+  handleCpfChange = cpf => {
+    this.setState({cpf});
+  };
+
+  handlePasswordChange = password => {
+    this.setState({password});
+  };
+
+  handlePasswordConfirmChange = passwordConfirm => {
+    this.setState({passwordConfirm});
+  };
+
+  handleShowPass = () => {
+    this.setState({showPass: !this.state.showPass});
+  };
+
+  handleShowPassConfirm = () => {
+    this.setState({showPassConfirm: !this.state.showPassConfirm});
+  };
+
+  validationPass = (password, passwordConfirm) => {
+    if (password === passwordConfirm) {
+      return true;
+    } else {
+      ToastAndroid.show('Senhas não coincidem!', ToastAndroid.SHORT);
+      return false;
+    }
+  };
+
+  validationDataNascimento = dataNascimento => {
+    let dateNascUser = moment(dataNascimento, 'DD/MM/YYYY').add(18, 'years');
+    let dateNow = moment(this.state.todayDate, 'DD/MM/YYYY');
+
+    return moment(dateNow).isAfter(dateNascUser) ? true : false;
+  };
+
+  pressBtnCadastrar = () => {
+    let regex = /(?!(\d)\1{2}.\1{3}.\1{3}-\1{2})\d{3}\.\d{3}\.\d{3}\-\d{2}/gm;
+    if (!this.state.nome) {
+      ToastAndroid.show(
+        'É necessário preencher o campo de "Nome"',
+        ToastAndroid.SHORT,
+      );
+    } else if (!this.state.email) {
+      ToastAndroid.show(
+        'É necessário preencher o campo de "E-mail"',
+        ToastAndroid.SHORT,
+      );
+    } else if (!this.state.cpf) {
+      {
+        ToastAndroid.show(
+          'É necessário preencher o campo de "CPF"',
+          ToastAndroid.SHORT,
+        );
+      }
+    } else if (!regex.test(this.state.cpf)) {
+      ToastAndroid.show('O CPF digitado é inválido.', ToastAndroid.SHORT);
+    } else if (!this.validationDataNascimento(this.state.dataNasc)) {
+      ToastAndroid.show(
+        'Idade do usuário precisa ser maior de 18!',
+        ToastAndroid.SHORT,
+      );
+    } else if (!this.state.password) {
+      ToastAndroid.show(
+        'É necessário preencher o campo de "Senha"',
+        ToastAndroid.SHORT,
+      );
+    } else if (
+      this.validationPass(this.state.password, this.state.passwordConfirm)
+    ) {
+      this._store();
+    }
+  };
+
+  _store = async () => {
+    let dataStore = {
+      nome: this.state.nome,
+      sobrenome: this.state.sobrenome,
+      email: this.state.email,
+      cpf: this.state.cpf,
+      senha: this.state.password,
+      dataNascimento: this.state.dataNasc
+        .split('/')
+        .reverse()
+        .join('-'),
+      location: this.state.location,
+    };
+    try {
+      await api
+        .post('/user/store', dataStore)
+        .then(response => {
+          ToastAndroid.show(
+            'Cadastro realizado com sucesso!',
+            ToastAndroid.SHORT,
+          );
+          this.props.navigation.navigate('Login');
+        })
+        .catch(err => {
+          ToastAndroid.show(err.response.data.error, ToastAndroid.SHORT);
+        });
+    } catch (error) {
+      ToastAndroid.show(
+        'Ocorreu um erro ao tentar cadastrar.',
+        ToastAndroid.SHORT,
+      );
+    }
+  };
 }
 
 const mapStateToProps = (state, props) => ({

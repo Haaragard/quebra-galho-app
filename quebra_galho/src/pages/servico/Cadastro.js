@@ -239,10 +239,14 @@ class DivulgarServico extends Component {
                     draggable
                     coordinate={{
                       latitude: Number(
-                        this.state.service.location.coordinates[1],
+                        this.state.service.location.coordinates.length > 0
+                          ? this.state.service.location.coordinates[1]
+                          : 0,
                       ),
                       longitude: Number(
-                        this.state.service.location.coordinates[0],
+                        this.state.service.location.coordinates.length > 0
+                          ? this.state.service.location.coordinates[0]
+                          : 0,
                       ),
                       latitudeDelta: 0.0043,
                       longitudeDelta: 0.0034,
@@ -549,6 +553,11 @@ class DivulgarServico extends Component {
         'Erro ao enviar requisição de upload.',
         ToastAndroid.SHORT,
       );
+    }
+  };
+
+  checkLocationForMapShow = () => {
+    if (this.state.user) {
     }
   };
 }

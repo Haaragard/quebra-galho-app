@@ -4,7 +4,7 @@ import {
   View,
   FlatList,
   Text,
-  Button,
+  Slider,
   TouchableOpacity,
   Image,
 } from 'react-native';
@@ -12,79 +12,31 @@ import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
 
-import api, {BASEURL} from '../../api';
+import api, {BASEURL, BASE_URL_IMG} from '../../api';
 
-import {styles, stylesMenu} from '../../styles/DefaultStyles';
-
-const DATA = [
-  {
-    _id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    descricao: 'First Item',
-    fotoPrincipal: 'testefoto1',
-  },
-  {
-    _id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    descricao: 'Second Item',
-    fotoPrincipal: 'testefoto2',
-  },
-  {
-    _id: '58694a0f-3da1-47df-bdgs6-1gsgs1e29d72',
-    descricao: 'Third Item',
-    fotoPrincipal: 'testefoto3',
-  },
-  {
-    _id: '58694a0f-3gd1-474w-bd96-145571e29d72',
-    descricao: 'Fourth Item',
-    fotoPrincipal: 'testefoto4',
-  },
-  {
-    _id: '58dwdwa0f-3da1-471f-bd96-145571e29d72',
-    descricao: 'Fifth Item',
-    fotoPrincipal: 'testefoto5',
-  },
-];
+import {styles} from '../../styles/DefaultStyles';
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      listServicosMaisAcessados: DATA,
-      listServicosMaisProximos: DATA,
+      maisAcessadosPage: 0,
+      maisProximosPage: 0,
+      maxDistanceMaisProximos: 10000,
+      listServicosMaisAcessados: [],
+      listServicosMaisProximos: [],
     };
   }
 
   componentDidMount() {
-    // this._setLists();
+    this._setLists();
   }
-
-  _setLists = async () => {
-    _setListGeoLocation();
-    _setListAccess();
-    this.setState({
-      listServicosMaisAcessados: DATA,
-      listServicosMaisProximos: DATA,
-    });
-  };
-
-  _setListGeoLocation = async () => {
-    const service = {};
-
-    try {
-      // api.post('/service/list');
-    } catch (error) {}
-  };
-
-  _setListAccess = async () => {
-    const service = {
-      acessos: 'desc',
-    };
-  };
 
   render() {
     return (
       <View style={styles.content}>
         <View style={styles.contentServicosMaisAcessado}>
-          <Text>Serviços mais procurados</Text>
+          <Text style={{marginTop: 10}}>Serviços mais procurados</Text>
           <View style={styles.containerFlatListMaisAcessado}>
             <FlatList
               horizontal
@@ -99,6 +51,12 @@ class Home extends Component {
               )}
               data={this.state.listServicosMaisAcessados}
               keyExtractor={(item, index) => item._id}
+              onEndReached={() =>
+                this.state.listServicosMaisAcessados.length > 9
+                  ? this._nextPageListByAccess()
+                  : undefined
+              }
+              onEndReachedThreshold={0.1}
               renderItem={({item, index}) => (
                 <TouchableOpacity
                   style={styles.touchableServicoSmall}
@@ -107,12 +65,19 @@ class Home extends Component {
                   }}>
                   <View style={styles.dadosServicoSmall}>
                     <Image
-                      source={{uri: BASEURL + item.fotoPrincipal}}
+                      source={{
+                        uri: `${BASE_URL_IMG}service/${item.fotoPrincipal}`,
+                      }}
                       style={styles.imageServicoSmall}
                     />
-                    <View style={styles.descricaoServicoSmall}>
+                    <View style={styles.infosServicoListagemSmall}>
                       <Text
-                        numberOfLines={4}
+                        numberOfLines={1}
+                        style={styles.nomeServicoListagemSmall}>
+                        {item.descricao}
+                      </Text>
+                      <Text
+                        numberOfLines={2}
                         style={styles.descricaoServicoSmall}>
                         {item.descricao}
                       </Text>
@@ -124,7 +89,9 @@ class Home extends Component {
           </View>
         </View>
         <View style={styles.contentServicosProximos}>
-          <Text>Serviços próximos de você</Text>
+          {/* <Text style={{marginTop: 10}}>Distância</Text> */}
+          {/* <Slider style={{width: '100%', height: 50}} /> */}
+          <Text style={{marginTop: 10}}>Serviços próximos de você</Text>
           <View style={styles.containerFlatListProximo}>
             <FlatList
               style={styles.padraoFLatList}
@@ -138,21 +105,34 @@ class Home extends Component {
               )}
               data={this.state.listServicosMaisProximos}
               keyExtractor={(item, index) => item._id}
+              onEndReached={() =>
+                this.state.listServicosMaisProximos.length > 9
+                  ? this._nextPageListByLocation()
+                  : undefined
+              }
+              onEndReachedThreshold={0.1}
               renderItem={({item, index}) => (
                 <TouchableOpacity
                   style={styles.touchableServicoBig}
                   onPress={() => {
-                    console.warn('essa foi');
+                    this._visualizeSelectedService(item._id);
                   }}>
                   <View style={styles.dadosServicoBig}>
                     <Image
-                      source={{uri: BASEURL + item.fotoPrincipal}}
+                      source={{
+                        uri: `${BASE_URL_IMG}service/${item.fotoPrincipal}`,
+                      }}
                       style={styles.imageServicoBig}
                     />
-                    <View style={styles.descricaoServicoBig}>
+                    <View style={styles.infosServicoListagemSmall}>
                       <Text
-                        numberOfLines={4}
-                        style={styles.descricaoServicoBig}>
+                        numberOfLines={1}
+                        style={styles.nomeServicoListagemSmall}>
+                        {item.nome}
+                      </Text>
+                      <Text
+                        numberOfLines={3}
+                        style={styles.descricaoServicoListagemSmall}>
                         {item.descricao}
                       </Text>
                     </View>
@@ -165,6 +145,103 @@ class Home extends Component {
       </View>
     );
   }
+
+  _visualizeSelectedService = async index => {
+    console.warn(index);
+  };
+
+  _handleLocationSearchSlider = () => {
+    this.setState({maisProximosPage: 0});
+    this._setListGeoLocation();
+  };
+
+  _nextPageListByAccess = () => {
+    let newPage = this.state.maisAcessadosPage + 1;
+    this.setState({maisAcessadosPage: newPage});
+    this._setListAccess(newPage);
+  };
+
+  _nextPageListByLocation = () => {
+    let newPage = this.state.maisProximosPage + 1;
+    this.setState({maisProximosPage: newPage});
+    this._setListGeoLocation(newPage);
+  };
+
+  _setLists = async () => {
+    this._setListAccess();
+    this._setListGeoLocation();
+  };
+
+  _setListGeoLocation = async (page = 0) => {
+    let post = {
+      location: this.props.user.location.coordinates,
+      list: {
+        page,
+        limit: 10,
+      },
+    };
+
+    try {
+      await api
+        .post('/service/list/geoLocation', post)
+        .then(response => {
+          let services = this.state.listServicosMaisProximos;
+          response.data.services.map((val, index) => {
+            services.push(val);
+          });
+
+          this.setState({
+            listServicosMaisProximos: services,
+          });
+        })
+        .catch(err => {
+          ToastAndroid.show(
+            `Nenhum serviço encontrado na distância de ${err.response.data.distance}KMs.`,
+            ToastAndroid.SHORT,
+          );
+        });
+    } catch (error) {
+      ToastAndroid.show(
+        `Ocorreu algum erro inesperado na busca de serviços pela localização.`,
+        ToastAndroid.SHORT,
+      );
+    }
+  };
+
+  _setListAccess = async (page = 0) => {
+    let post = {
+      list: {
+        page,
+        limit: 10,
+      },
+    };
+
+    try {
+      await api
+        .post('/service/list/mostAccess', post)
+        .then(response => {
+          let services = this.state.listServicosMaisAcessados;
+          response.data.services.map((val, index) => {
+            services.push(val);
+          });
+
+          this.setState({
+            listServicosMaisAcessados: services,
+          });
+        })
+        .catch(err => {
+          ToastAndroid.show(
+            'Não foi possível buscar esse tipo de serviço.',
+            ToastAndroid.SHORT,
+          );
+        });
+    } catch (error) {
+      ToastAndroid.show(
+        `Ocorreu algum erro inesperado na busca de serviços pela localização.`,
+        ToastAndroid.SHORT,
+      );
+    }
+  };
 }
 
 const mapStateToProps = (state, props) => ({

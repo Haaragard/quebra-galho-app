@@ -59,7 +59,7 @@ class LoadingScreen extends Component {
     await Geolocation.getCurrentPosition(
       async position => {
         let location = {
-          type: 'Pointer',
+          type: 'Point',
           coordinates: [position.coords.longitude, position.coords.latitude],
         };
 

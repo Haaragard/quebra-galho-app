@@ -20,7 +20,6 @@ import Pagamento from '../pages/pagamento';
 
 import Agenda from '../pages/agenda';
 
-
 import {stylesMenu} from '../styles/DefaultStyles';
 
 // import {LocaleConfig} from 'react-native-calendars';
@@ -213,15 +212,16 @@ const AppNavigator = createDrawerNavigator(
     Home: {screen: HomeStack},
     MinhaConta: {screen: MinhaContaStack},
     Pagamento: {screen: PagamentoStack},
-    ListaServico:{screen: ListaServicoStack},
+    ListaServico: {screen: ListaServicoStack},
     DivulgarServico: {screen: DivulgarServicoStack},
-    Agenda: {screen: AgendaStack}
+    Agenda: {screen: AgendaStack},
   },
   {
     initialRouteName: 'Home',
     contentComponent: DrawerContent,
     drawerPosition: 'left',
     drawerType: 'front',
+    unmountInactiveRoutes: true,
   },
 );
 
