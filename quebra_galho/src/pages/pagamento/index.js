@@ -25,7 +25,8 @@ class Pagamento extends Component {
     super(props);
 
     this.state = {
-      service: ''
+      service: '',
+      current_reputation: 0
     }
   }
 
@@ -47,23 +48,44 @@ class Pagamento extends Component {
       </Picker>
     )
   }
+  // renderReputation = () => {
+  //   return (
+  //     <Picker
+  //       selectedValue={this.state.service}
+  //       style={{height: 50, width: '100%', }}
+  //       onValueChange={service =>
+  //         this.setState({ service })
+  //       }>
+  //       <Picker.Item label="Selecione" value="" />
+  //       <Picker.Item label="Péssimo" value="pessimo" />
+  //       <Picker.Item label="Ruim" value="ruim" />
+  //       <Picker.Item label="Regular" value="regular" />
+  //       <Picker.Item label="Bom" value="bom" />
+  //       <Picker.Item label="Ótimo" value="otimo" />
+  //     </Picker>
+  //   )
+  // }
+
   renderReputation = () => {
-    return (
-      <Picker
-        selectedValue={this.state.service}
-        style={{height: 50, width: '100%', }}
-        onValueChange={service =>
-          this.setState({ service })
-        }>
-        <Picker.Item label="Selecione" value="" />
-        <Picker.Item label="Péssimo" value="pessimo" />
-        <Picker.Item label="Ruim" value="ruim" />
-        <Picker.Item label="Regular" value="regular" />
-        <Picker.Item label="Bom" value="bom" />
-        <Picker.Item label="Ótimo" value="otimo" />
-      </Picker>
-    )
+    const reputations = [0, 1, 2, 3, 4]
+    return reputations.map(reputation => {
+      let color = "#fff"
+      console.warn('passou')
+      console.warn(this.state.current_reputation)
+      if (this.state.current_reputation >= reputation) {
+        color = "#000"
+      }
+      return <View key={reputation}>
+        <Button style={{color}} onPress={() => {
+          this.setState({
+            current_reputation: reputation
+          })
+          console.warn('foi')
+        }} title={reputation.toString()}/>
+      </View>
+    })
   }
+
   render() {
     return (
       <View style={styles.content}>

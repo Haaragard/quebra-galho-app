@@ -101,6 +101,17 @@ class DrawerContent extends Component {
             </View>
           </TouchableOpacity>
 
+          <TouchableOpacity
+            onPress={() => {
+              this._checkLoginUser('GerenciaServico');
+            }}>
+            <View style={drawerStyles.containerMenuLine}>
+              <Text style={drawerStyles.textContainerMenuLine}>
+                Gerencia Servico
+              </Text>
+            </View>
+          </TouchableOpacity>
+
           <View style={drawerStyles.separator}></View>
           {this.state.auth ? this.buttonMenuMinhaConta() : undefined}
           <TouchableOpacity

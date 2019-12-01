@@ -92,10 +92,13 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   descricaoServicoSmall: {
-    flex: 1,
+    flexDirection: 'row',
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 5,
   },
   touchableServicoBig: {
-    height: 110,
+    height: 150,
     width: '100%',
     backgroundColor: '#F2F2F2',
   },
@@ -110,14 +113,22 @@ export const styles = StyleSheet.create({
     marginRight: 10,
     backgroundColor: '#fff',
   },
-  descricaoServicoBig: {
+  descricaoAgendaContainer: {
     flex: 1,
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 15,
+  },
+  descricaoServicoBig: {
+    marginLeft: 10,
+    marginBottom: 5,
+    marginTop: 5,
   },
   descricaoAgenda:{
-    flexDirection: "column",
-    marginLeft: 10,
-    marginBottom: 10,
-    marginTop: 10,
+    // flexDirection: "column",
+    // marginLeft: 10,
+    // marginBottom: 10,
+    // marginTop: 10,
   },
   contentFlatListEmpty: {
     flex: 1,
@@ -342,6 +353,13 @@ export const DivulgarServicosStyle = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
+});
+
+export const GerenciarServicoStyle = StyleSheet.create({
+  headerText: {
+    textAlign: 'center',
+    
+  }
 });
 
 export const PagamentoStyle = StyleSheet.create({

@@ -82,12 +82,10 @@ class ListaServico extends Component {
     return (
         <View style={styles.contentServicosProximos}>
           <Text>Serviços Realizados</Text>
-          <View style={styles.containerFlatListProximo}>
+          <View style={{...styles.containerFlatListProximo, backgroundColor: '#fff'}}>
             <FlatList
               style={styles.padraoFLatList}
-              ItemSeparatorComponent={() => (
-                <View style={styles.separatorDown} />
-              )}
+
               ListEmptyComponent={() => (
                 <View style={styles.contentFlatListEmpty}>
                   <Text>Nenhum encontrado...</Text>
@@ -97,7 +95,14 @@ class ListaServico extends Component {
               keyExtractor={(item, index) => item._id}
               renderItem={({item, index}) => (
                 <TouchableOpacity
-                  style={styles.touchableServicoBig}
+                  style={{...styles.touchableServicoBig,  
+                    marginLeft: 5,
+                    marginBottom: 5,
+                    marginTop: 5,
+                    backgroundColor: '#e6e6e6',
+                    borderColor: '#807e7e',
+                    borderWidth: 2,
+                  }}
                   onPress={() => {
                     this.props.navigation.navigate('Pagamento');
                   }}>
