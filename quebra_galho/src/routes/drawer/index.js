@@ -8,14 +8,14 @@ import * as UserActions from '../../store/actions/user';
 import api from '../../api';
 
 import {drawerStyles} from '../../styles/DefaultStyles';
-import Icon from 'react-native-vector-icons/Entypo';
+import Icon from 'react-native-vector-icons/AntDesign';
 
 import ProfileImage from '../../components/user/profileImage';
 
 const UserHeader = props => (
   <View style={drawerStyles.containerUser}>
     <View style={drawerStyles.containerUserImg}>
-      <ProfileImage height={80} width={80} />
+      <ProfileImage height={60} width={60} />
     </View>
     <View style={drawerStyles.containerUserData}>
       <View style={drawerStyles.containerGroupUserData}>
@@ -55,6 +55,13 @@ class DrawerContent extends Component {
               this.props.navigation.navigate('Home');
             }}>
             <View style={drawerStyles.containerMenuLine}>
+            <View style={drawerStyles.containerIcon}>
+                <Icon
+                  name='home'
+                  size={25}
+                  color="#898989"
+                />
+              </View>
               <Text style={drawerStyles.textContainerMenuLine}>Home</Text>
             </View>
           </TouchableOpacity>
@@ -64,6 +71,13 @@ class DrawerContent extends Component {
               this._checkLoginUser('DivulgarServico');
             }}>
             <View style={drawerStyles.containerMenuLine}>
+            <View style={drawerStyles.containerIcon}>
+                <Icon
+                  name='notification'
+                  size={25}
+                  color="#898989"
+                />
+              </View>
               <Text style={drawerStyles.textContainerMenuLine}>
                 Divulgar Serviços
               </Text>
@@ -72,9 +86,16 @@ class DrawerContent extends Component {
 
           <TouchableOpacity
             onPress={() => {
-              this._checkLoginUser('DivulgarServico');
+              this._checkLoginUser('Historico');
             }}>
             <View style={drawerStyles.containerMenuLine}>
+              <View style={drawerStyles.containerIcon}>
+                <Icon
+                  name='database'
+                  size={25}
+                  color="#898989"
+                />
+              </View>
               <Text style={drawerStyles.textContainerMenuLine}>
                 Histórico de Serviços
               </Text>
@@ -86,6 +107,13 @@ class DrawerContent extends Component {
               this._checkLoginUser('Agenda');
             }}>
             <View style={drawerStyles.containerMenuLine}>
+            <View style={drawerStyles.containerIcon}>
+                <Icon
+                  name='calendar'
+                  size={25}
+                  color="#898989"
+                />
+              </View>
               <Text style={drawerStyles.textContainerMenuLine}>Agenda</Text>
             </View>
           </TouchableOpacity>
@@ -95,6 +123,13 @@ class DrawerContent extends Component {
               this._checkLoginUser('ListaServico');
             }}>
             <View style={drawerStyles.containerMenuLine}>
+            <View style={drawerStyles.containerIcon}>
+                <Icon
+                  name='creditcard'
+                  size={25}
+                  color="#898989"
+                />
+                </View>
               <Text style={drawerStyles.textContainerMenuLine}>
                 Confirmação de pagamento
               </Text>
@@ -106,8 +141,15 @@ class DrawerContent extends Component {
               this._checkLoginUser('GerenciaServico');
             }}>
             <View style={drawerStyles.containerMenuLine}>
+            <View style={drawerStyles.containerIcon}>
+                <Icon
+                  name='solution1'
+                  size={25}
+                  color="#898989"
+                />
+                </View>
               <Text style={drawerStyles.textContainerMenuLine}>
-                Gerencia Servico
+                Gerenciar Servico
               </Text>
             </View>
           </TouchableOpacity>
@@ -123,9 +165,9 @@ class DrawerContent extends Component {
             <View style={drawerStyles.containerMenuLine}>
               <View style={drawerStyles.containerIcon}>
                 <Icon
-                  name={this.state.auth ? 'log-out' : 'login'}
+                  name={this.state.auth ? 'logout' : 'login'}
                   size={30}
-                  color="#000"
+                  color="#898989"
                 />
               </View>
               <Text style={drawerStyles.textMenu}>
@@ -182,11 +224,11 @@ class DrawerContent extends Component {
       onPress={() => this.props.navigation.navigate('MinhaConta')}>
       <View style={drawerStyles.containerMenuLine}>
         <View style={drawerStyles.containerIcon}>
-          {/* <Icon
-            name={this.state.auth ? 'log-out' : 'login'}
-            size={30}
-            color="#000"
-          /> */}
+          <Icon
+            name='user'
+            size={25}
+            color="#898989"
+            />
         </View>
         <Text style={drawerStyles.textMenu}>Minha conta</Text>
       </View>

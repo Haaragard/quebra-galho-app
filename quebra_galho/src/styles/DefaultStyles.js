@@ -272,6 +272,8 @@ export const drawerStyles = StyleSheet.create({
     width: '30%',
     height: '100%',
     marginRight: 10,
+    left: 10,
+    top: 10,
   },
   containerUserData: {
     flex: 1,
@@ -283,6 +285,7 @@ export const drawerStyles = StyleSheet.create({
   containerIcon: {
     alignContent: 'center',
     alignItems: 'center',
+    left: 5,
   },
   containerMenuLine: {
     height: 40,
@@ -292,6 +295,13 @@ export const drawerStyles = StyleSheet.create({
   },
   textContainerMenuLine: {
     marginLeft: 20,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 14,
+    lineHeight: 16,
+    color: '#898989',
+    marginLeft: 10,
   },
   textUserDataLabel: {
     width: 45,
@@ -304,7 +314,13 @@ export const drawerStyles = StyleSheet.create({
     marginTop: 5,
   },
   textMenu: {
-    marginLeft: 20,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 14,
+    lineHeight: 16,
+    color: '#898989',
+    marginLeft: 10,
   },
   separator: {
     width: '100%',
@@ -381,5 +397,34 @@ export const PagamentoStyle = StyleSheet.create({
   },
   warningTextBold: {
     fontWeight: 'bold',
+  },
+});
+
+export const HistoricoStyles = StyleSheet.create({
+  container: {
+    flex: 1,        
+    backgroundColor: '#eee',
+  },
+  postContainer: {    
+    marginHorizontal: 10,
+    marginVertical: 5,
+    padding: 20,
+    backgroundColor: '#FFF',
+    borderRadius: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2, },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  postTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#454545'
+  },
+  postDescription: {
+    color: '#666',
+    fontWeight: 'bold',    
   },
 });

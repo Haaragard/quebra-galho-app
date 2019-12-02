@@ -3,24 +3,19 @@ import {View, TouchableOpacity} from 'react-native';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createDrawerNavigator} from 'react-navigation-drawer';
-
 import Icon from 'react-native-vector-icons/Entypo';
 import DrawerContent from './drawer';
-
 import LoadingScreen from '../pages/LoadingScreen';
-
 import Login from '../pages/login';
 import Cadastro from '../pages/cadastro';
-
 import Home from '../pages/home';
 import DivulgarServico from '../pages/servico/Cadastro';
 import MinhaConta from '../pages/user';
 import ListaServico from '../pages/listaServico';
 import Pagamento from '../pages/pagamento';
-
+import Historico from '../pages/historico';
 import Agenda from '../pages/agenda';
 import GerenciaServico from '../pages/gerenciarServico';
-
 import {stylesMenu} from '../styles/DefaultStyles';
 
 // import {LocaleConfig} from 'react-native-calendars';
@@ -188,6 +183,26 @@ const AgendaStack = createStackNavigator(
   },
 );
 
+const HistoricoStack = createStackNavigator(
+  {
+    Historico: {
+      screen: Historico,
+      navigationOptions: ({navigation}) => ({
+        title: 'Histórico',
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      initialRouteName: 'Historico',
+      headerLeft: <DrawerIcon navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: stylesMenu.backgroundColor,
+      },
+    }),
+  },
+);
+
 const ListaServicoStack = createStackNavigator(
   {
     Agenda: {
@@ -236,6 +251,7 @@ const AppNavigator = createDrawerNavigator(
     DivulgarServico: {screen: DivulgarServicoStack},
     Agenda: {screen: AgendaStack},
     GerenciaServico: {screen: GerenciaServicoStack},
+    Historico: {screen: HistoricoStack},
   },
   {
     initialRouteName: 'Home',
