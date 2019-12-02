@@ -8,14 +8,14 @@ import {
   TouchableOpacity,
   Button,
   ToastAndroid,
-  Alert
+  Alert,
 } from 'react-native';
 
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import AsyncStorage from '@react-native-community/async-storage';
 
-import {styles, formStyles, PagamentoStyle } from '../../styles/DefaultStyles';
+import {styles, formStyles, PagamentoStyle} from '../../styles/DefaultStyles';
 import Icon from 'react-native-vector-icons/Entypo';
 
 import * as ServiceActions from '../../store/actions/service';
@@ -26,28 +26,26 @@ class Pagamento extends Component {
 
     this.state = {
       service: '',
-      current_reputation: 0
-    }
+      current_reputation: 0,
+    };
   }
 
   componentDidMount() {
-    this.props.requestServices()
+    this.props.requestServices();
   }
 
   renderSelect = () => {
     return (
       <Picker
         selectedValue={this.state.service}
-        style={{height: 50, width: '100%', }}
-        onValueChange={service =>
-          this.setState({ service })
-        }>
+        style={{height: 50, width: '100%'}}
+        onValueChange={service => this.setState({service})}>
         <Picker.Item label="Selecione" value="" />
         <Picker.Item label="Java" value="java" />
         <Picker.Item label="JavaScript" value="js" />
       </Picker>
-    )
-  }
+    );
+  };
   // renderReputation = () => {
   //   return (
   //     <Picker
@@ -67,63 +65,60 @@ class Pagamento extends Component {
   // }
 
   renderReputation = () => {
-    const reputations = [0, 1, 2, 3, 4]
+    const reputations = [0, 1, 2, 3, 4];
     return reputations.map(reputation => {
-      let color = "#fff"
-      console.warn('passou')
-      console.warn(this.state.current_reputation)
+      let color = '#fff';
+      console.warn('passou');
+      console.warn(this.state.current_reputation);
       if (this.state.current_reputation >= reputation) {
-        color = "#000"
+        color = '#000';
       }
-      return <View key={reputation}>
-        <Button style={{color}} onPress={() => {
-          this.setState({
-            current_reputation: reputation
-          })
-          console.warn('foi')
-        }} title={reputation.toString()}/>
-      </View>
-    })
-  }
+      return (
+        <View key={reputation}>
+          <Button
+            style={{color}}
+            onPress={() => {
+              this.setState({
+                current_reputation: reputation,
+              });
+              console.warn('foi');
+            }}
+            title={reputation.toString()}
+          />
+        </View>
+      );
+    });
+  };
 
   render() {
     return (
       <View style={styles.content}>
         <View style={PagamentoStyle.headerText}>
           <Text style={PagamentoStyle.warningText}>
-            Atenção: Apenas confirme o pagamento após  receber o serviço/pagamento.
+            Atenção: Apenas confirme o pagamento após receber o
+            serviço/pagamento.
           </Text>
         </View>
         <ScrollView contentContainerStyle={styles.contentScrollView}>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Serviço:</Text>
-            <Text style={formStyles.textValue}>
-              Serviço
-            </Text>
+            <Text style={formStyles.textValue}>Serviço</Text>
           </View>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Freelancer:</Text>
-            <Text style={formStyles.textValue}>
-              nome
-            </Text>
+            <Text style={formStyles.textValue}>nome</Text>
           </View>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Valor:</Text>
-            <Text style={formStyles.textValue}>
-              0,0 reais
-            </Text>
+            <Text style={formStyles.textValue}>0,0 reais</Text>
           </View>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Horario:</Text>
-            <Text style={formStyles.textValue}>
-              00:00 
-            </Text>
+            <Text style={formStyles.textValue}>00:00</Text>
           </View>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Data:</Text>
-            <Text style={formStyles.textValue}>
-              DD/MM/AAAA
-            </Text>
+            <Text style={formStyles.textValue}>DD/MM/AAAA</Text>
           </View>
           <View style={formStyles.groupText}>
             <Text style={formStyles.textLabel}>Avaliação:</Text>
@@ -131,12 +126,20 @@ class Pagamento extends Component {
           </View>
           <View style={formStyles.btGroup}>
             <View style={formStyles.btSubmit}>
-              <Button title="Confirmar pagamento" onPress={() => console.warn('pagou')} />
+              <Button
+                title="Confirmar pagamento"
+                onPress={() => console.warn('pagou')}
+              />
             </View>
           </View>
           <View style={formStyles.btGroup}>
             <View style={formStyles.btSubmit}>
-              <Button title="Cancelar" onPress={() => {this.props.navigation.navigate('ListaServico');} }/>
+              <Button
+                title="Cancelar"
+                onPress={() => {
+                  this.props.navigation.navigate('ListaServico');
+                }}
+              />
             </View>
           </View>
           {/* <View style={formStyles.groupText}>
@@ -153,13 +156,10 @@ class Pagamento extends Component {
 
 const mapStateToProps = (state, props) => ({
   ...props,
-  service: state.service
+  service: state.service,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(ServiceActions, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Pagamento);
+export default connect(mapStateToProps, mapDispatchToProps)(Pagamento);

@@ -1,5 +1,6 @@
-export function requestServices() {
+export function toggleSelectedService(_id) {
   return {
-    type: 'REQUEST_SERVICES'
+    type: 'TOGGLE_SELECTED_SERVICE',
+    _id,
   };
 }

@@ -41,8 +41,6 @@ class ProfileImage extends Component {
     );
   }
 
-  loadImage = async () => {};
-
   pressImage = () => {
     if (!this.state.user) return false;
     try {

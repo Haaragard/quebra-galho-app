@@ -1,21 +1,17 @@
-import api from "../../api";
-
 const actions = {
-  REQUEST_SERVICES: 'REQUEST_SERVICES'
+  TOGGLE_SELECTED_SERVICE: 'TOGGLE_SELECTED_SERVICE',
 };
 
 const INITIAL_STATE = {
-  list: []
+  _id: '',
 };
 
-export default async function service(state = INITIAL_STATE, action) {
+export default function service(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case actions.REQUEST_SERVICES:
-      const list = await api.get("service/list")
-      
+    case actions.TOGGLE_SELECTED_SERVICE:
       return {
         ...state,
-        list
+        _id: action._id,
       };
     default:
       return state;

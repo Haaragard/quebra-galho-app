@@ -11,8 +11,9 @@ import {
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import * as UserActions from '../../store/actions/user';
+import * as ServiceActions from '../../store/actions/service';
 
-import api, {BASEURL, BASE_URL_IMG} from '../../api';
+import api, {BASE_URL_IMG} from '../../api';
 
 import {styles} from '../../styles/DefaultStyles';
 
@@ -54,14 +55,14 @@ class Home extends Component {
               onEndReached={() =>
                 this.state.listServicosMaisAcessados.length > 9
                   ? this._nextPageListByAccess()
-                  : undefined
+                  : undefineddd
               }
               onEndReachedThreshold={0.1}
               renderItem={({item, index}) => (
                 <TouchableOpacity
                   style={styles.touchableServicoSmall}
                   onPress={() => {
-                    console.warn('essa foi');
+                    this._visualizeSelectedService(item._id);
                   }}>
                   <View style={styles.dadosServicoSmall}>
                     <Image
@@ -74,7 +75,7 @@ class Home extends Component {
                       <Text
                         numberOfLines={1}
                         style={styles.nomeServicoListagemSmall}>
-                        {item.descricao}
+                        {item.nome}
                       </Text>
                       <Text
                         numberOfLines={2}
@@ -147,7 +148,8 @@ class Home extends Component {
   }
 
   _visualizeSelectedService = async index => {
-    console.warn(index);
+    await this.props.toggleSelectedService(index);
+    this.props.navigation.navigate('VisualizarServico');
   };
 
   _handleLocationSearchSlider = () => {
@@ -247,9 +249,15 @@ class Home extends Component {
 const mapStateToProps = (state, props) => ({
   ...props,
   user: state.user,
+  service: state.service,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(UserActions, dispatch);
+const mapDispatchToProps = dispatch => {
+  let actions = {
+    ...UserActions,
+    ...ServiceActions,
+  };
+  return bindActionCreators(actions, dispatch);
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

@@ -16,6 +16,8 @@ import Pagamento from '../pages/pagamento';
 import Historico from '../pages/historico';
 import Agenda from '../pages/agenda';
 import GerenciaServico from '../pages/gerenciarServico';
+import VisualizarServico from '../pages/servico/VisualizarServico';
+
 import {stylesMenu} from '../styles/DefaultStyles';
 
 // import {LocaleConfig} from 'react-native-calendars';
@@ -242,6 +244,26 @@ const GerenciaServicoStack = createStackNavigator(
   },
 );
 
+const VisualizarServicoStack = createStackNavigator(
+  {
+    VisualizarServico: {
+      screen: VisualizarServico,
+      navigationOptions: ({navigation}) => ({
+        title: 'Visualizar Servico',
+      }),
+    },
+  },
+  {
+    defaultNavigationOptions: ({navigation}) => ({
+      initialRouteName: 'VisualizarServico',
+      headerLeft: <DrawerIcon navigation={navigation} />,
+      headerStyle: {
+        backgroundColor: stylesMenu.backgroundColor,
+      },
+    }),
+  },
+);
+
 const AppNavigator = createDrawerNavigator(
   {
     Home: {screen: HomeStack},
@@ -252,6 +274,7 @@ const AppNavigator = createDrawerNavigator(
     Agenda: {screen: AgendaStack},
     GerenciaServico: {screen: GerenciaServicoStack},
     Historico: {screen: HistoricoStack},
+    VisualizarServico: {screen: VisualizarServicoStack},
   },
   {
     initialRouteName: 'Home',

@@ -48,84 +48,76 @@ class ListaServico extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      tipoListagem: this.props.tipoLista,
       listServicosMaisProximos: DATA,
     };
   }
 
   componentDidMount() {
-    // this._setLists();
+    this._setLists();
+  }
+
+  render() {
+    return (
+      <View style={styles.contentServicosProximos}>
+        <View
+          style={{...styles.containerFlatListProximo, backgroundColor: '#fff'}}>
+          <FlatList
+            style={styles.padraoFLatList}
+            ListEmptyComponent={() => (
+              <View style={styles.contentFlatListEmpty}>
+                <Text>Nenhum encontrado...</Text>
+              </View>
+            )}
+            data={this.state.listServicosMaisProximos}
+            keyExtractor={(item, index) => item._id}
+            renderItem={({item, index}) => (
+              <TouchableOpacity
+                style={{
+                  ...styles.touchableServicoBig,
+                  marginLeft: 5,
+                  marginBottom: 5,
+                  marginTop: 5,
+                  backgroundColor: '#e6e6e6',
+                  borderColor: '#807e7e',
+                  borderWidth: 2,
+                }}
+                onPress={() => {
+                  this.props.navigation.navigate('Pagamento');
+                }}>
+                <View style={styles.dadosServicoBig}>
+                  <Image
+                    source={{uri: BASEURL + item.fotoPrincipal}}
+                    style={styles.imageServicoBig}
+                  />
+                  <View style={styles.descricaoServicoBig}>
+                    <Text numberOfLines={4} style={styles.descricaoServicoBig}>
+                      {item.descricao}
+                    </Text>
+                  </View>
+                </View>
+              </TouchableOpacity>
+            )}
+          />
+        </View>
+      </View>
+    );
   }
 
   _setLists = async () => {
+    let list = {
+      paymentConfirm: async () => {},
+      serviceHistory: async () => {},
+      serviceManage: async () => {},
+    };
+
+    await list[this.state.tipoListagem]();
     _setListGeoLocation();
     _setListAccess();
     this.setState({
       listServicosMaisProximos: DATA,
     });
   };
-
-  _setListGeoLocation = async () => {
-    const service = {};
-
-    try {
-      // api.post('/service/list');
-    } catch (error) {}
-  };
-
-  _setListAccess = async () => {
-    const service = {
-      acessos: 'desc',
-    };
-  };
-
-  render() {
-    return (
-        <View style={styles.contentServicosProximos}>
-          <Text>Serviços Realizados</Text>
-          <View style={{...styles.containerFlatListProximo, backgroundColor: '#fff'}}>
-            <FlatList
-              style={styles.padraoFLatList}
-
-              ListEmptyComponent={() => (
-                <View style={styles.contentFlatListEmpty}>
-                  <Text>Nenhum encontrado...</Text>
-                </View>
-              )}
-              data={this.state.listServicosMaisProximos}
-              keyExtractor={(item, index) => item._id}
-              renderItem={({item, index}) => (
-                <TouchableOpacity
-                  style={{...styles.touchableServicoBig,  
-                    marginLeft: 5,
-                    marginBottom: 5,
-                    marginTop: 5,
-                    backgroundColor: '#e6e6e6',
-                    borderColor: '#807e7e',
-                    borderWidth: 2,
-                  }}
-                  onPress={() => {
-                    this.props.navigation.navigate('Pagamento');
-                  }}>
-                  <View style={styles.dadosServicoBig}>
-                    <Image
-                      source={{uri: BASEURL + item.fotoPrincipal}}
-                      style={styles.imageServicoBig}
-                    />
-                    <View style={styles.descricaoServicoBig}>
-                      <Text
-                        numberOfLines={4}
-                        style={styles.descricaoServicoBig}>
-                        {item.descricao}
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              )}
-            />
-          </View>
-        </View>
-    );
-  }
 }
 
 const mapStateToProps = (state, props) => ({
