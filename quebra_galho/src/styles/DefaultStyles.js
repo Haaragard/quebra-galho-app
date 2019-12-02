@@ -111,6 +111,15 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   descricaoServicoBig: {
+    width: 200,
+    height: 28,
+    fontFamily: 'Roboto Slab',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 13,
+    lineHeight: 15,
+    textAlign: 'center',
+    color: '#000000',
     flex: 1,
   },
   contentFlatListEmpty: {
@@ -175,7 +184,7 @@ export const formStyles = StyleSheet.create({
   },
   btSubmit: {
     flex: 1,
-    width: 200,
+    width: 200,    
   },
   btCancel: {},
   btClear: {},
@@ -192,7 +201,7 @@ export const drawerStyles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
-    backgroundColor: '#80CCFF',
+    backgroundColor: '#1AA3FF',
     height: 80,
     width: '100%',
   },
@@ -208,6 +217,8 @@ export const drawerStyles = StyleSheet.create({
     width: '30%',
     height: '100%',
     marginRight: 10,
+    left: 10,
+    top: 10,
   },
   containerUserData: {
     flex: 1,
@@ -219,6 +230,7 @@ export const drawerStyles = StyleSheet.create({
   containerIcon: {
     alignContent: 'center',
     alignItems: 'center',
+    left: 5,
   },
   containerMenuLine: {
     height: 40,
@@ -227,20 +239,34 @@ export const drawerStyles = StyleSheet.create({
     alignItems: 'center',
   },
   textContainerMenuLine: {
-    marginLeft: 20,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 14,
+    lineHeight: 16,
+    color: '#898989',
+    marginLeft: 10,
   },
   textUserDataLabel: {
-    width: 45,
-    marginRight: 5,
-    marginTop: 5,
+    width: 30,
+    marginTop: 30,
     fontWeight: 'bold',
+    color: 'white',    
   },
   textUserData: {
+    color: 'white',
     flex: 1,
-    marginTop: 5,
+    marginTop: 30  ,
+    fontWeight: 'bold',
   },
   textMenu: {
-    marginLeft: 20,
+    fontFamily: 'Roboto',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 14,
+    lineHeight: 16,
+    color: '#898989',
+    marginLeft: 10,
   },
   separator: {
     width: '100%',
@@ -297,5 +323,47 @@ export const DivulgarServicosStyle = StyleSheet.create({
   content: {
     flex: 1,
     alignItems: 'center',
+  },
+});
+
+export const textHomeStyle = StyleSheet.create({
+  service: {    
+    fontFamily: 'Roboto Slab',
+    fontStyle: 'normal',
+    fontWeight: 'normal',
+    fontSize: 13,
+    lineHeight: 15,
+    left: 6,
+    textAlign: 'left',
+    color: '#6A6A6A'
+  },
+});
+
+export const HistoricoStyles = StyleSheet.create({
+  container: {
+    flex: 1,        
+    backgroundColor: '#eee',
+  },
+  postContainer: {    
+    marginHorizontal: 10,
+    marginVertical: 5,
+    padding: 20,
+    backgroundColor: '#FFF',
+    borderRadius: 3,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2, },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  postTitle: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    marginBottom: 5,
+    color: '#454545'
+  },
+  postDescription: {
+    color: '#666',
+    fontWeight: 'bold',    
   },
 });

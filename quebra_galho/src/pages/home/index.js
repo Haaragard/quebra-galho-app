@@ -14,7 +14,7 @@ import * as UserActions from '../../store/actions/user';
 
 import api, {BASEURL} from '../../api';
 
-import {styles, stylesMenu} from '../../styles/DefaultStyles';
+import {styles, stylesMenu, textHomeStyle} from '../../styles/DefaultStyles';
 
 const DATA = [
   {
@@ -84,7 +84,7 @@ class Home extends Component {
     return (
       <View style={styles.content}>
         <View style={styles.contentServicosMaisAcessado}>
-          <Text>Serviços mais procurados</Text>
+          <Text style={textHomeStyle.service}>Serviços mais procurados</Text>
           <View style={styles.containerFlatListMaisAcessado}>
             <FlatList
               horizontal
@@ -124,7 +124,7 @@ class Home extends Component {
           </View>
         </View>
         <View style={styles.contentServicosProximos}>
-          <Text>Serviços próximos de você</Text>
+          <Text style={textHomeStyle.service}>Serviços próximos de você</Text>
           <View style={styles.containerFlatListProximo}>
             <FlatList
               style={styles.padraoFLatList}

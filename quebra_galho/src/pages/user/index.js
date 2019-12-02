@@ -126,8 +126,7 @@ const mapStateToProps = (state, props) => ({
   user: state.user,
 });
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(UserActions, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators(UserActions, dispatch);
 
 export default connect(
   mapStateToProps,
